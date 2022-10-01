@@ -23,6 +23,34 @@ public abstract class Entity {
         this.img = img;
     }
 
+    // Khởi tạo mặc định
+    public Entity() {}
+
+    // Thêm các phương thức setter/ getter
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }

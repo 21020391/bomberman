@@ -6,17 +6,19 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -25,11 +27,17 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
 
+    public static int _width = 0;
+    public static int _height = 0;
+    public static int _level = 1;
+
+    // Lưu c sau khi đọc file
+    public static char[][] toObjects;
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -68,32 +76,61 @@ public class BombermanGame extends Application {
     }
 
     public void createMap() {
-        int[][] scene = new int[][]{
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        };
+        final File level1 = new File("res/levels/Level1.txt");
+        try (FileReader inputFile = new FileReader(level1)) {
+            Scanner sc = new Scanner(inputFile);
+            String line = sc.nextLine();
 
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (scene[i][j] == 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                } else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
+            //  Lấy kích thước bkground
+            StringTokenizer tokens = new StringTokenizer(line);
+            _level = Integer.parseInt(tokens.nextToken());
+            _height = Integer.parseInt(tokens.nextToken());
+            _width = Integer.parseInt(tokens.nextToken());
+
+            while (sc.hasNextLine()) {
+                toObjects = new char[_width][_height];
+                for (int i = 0; i < _height; i++) {
+                    String lineTile = sc.nextLine();
+                    StringTokenizer tokenTile = new StringTokenizer(lineTile);
+
+                    for (int j = 0; j < _width; j++) {
+                        char c = lineTile.charAt(j);
+
+                        Entity object;
+
+                        switch (c) {
+                            case '#':
+                                object = new Wall(j, i, Sprite.wall.getFxImage());
+                                break;
+                            case '*':
+                                object = new Brick(j, i, Sprite.brick.getFxImage());
+                                break;
+                            case'x':
+                                object = new Portal(j, i, Sprite.portal.getFxImage());
+                                c = ' ';
+                                break;
+                            case 'p':
+                                object = new Bomber(j, i, Sprite.player_right.getFxImage());
+                                break;
+                            case '1':
+                                object = new Ballom(j, i, Sprite.balloom_right1.getFxImage());
+                                break;
+                            case '2':
+                                object = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
+                                break;
+                            case 'b':
+                                object = new Bomb(j, i, Sprite.bomb.getFxImage());
+                                break;
+                            default:
+                                object = new Grass(j, i, Sprite.grass.getFxImage());
+                        }
+                        toObjects[j][i] = c;
+                        stillObjects.add(object);
+                    }
                 }
-                stillObjects.add(object);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
