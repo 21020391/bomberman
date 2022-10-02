@@ -6,11 +6,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import uet.oop.bomberman.act.move;
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.dynamic.Bomber;
+import uet.oop.bomberman.entities.dynamic.dynamics;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -18,21 +19,24 @@ import java.util.List;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
 
     public static int _width = 0;
     public static int _height = 0;
     public static int _level = 1;
 
+    public static boolean running;
+
     // Lưu c sau khi đọc file
     public static char[][] toObjects;
+
+    public static dynamics bomberman;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -56,6 +60,27 @@ public class BombermanGame extends Application {
         // Tao scene
         Scene scene = new Scene(root);
 
+        scene.setOnKeyPressed(event -> {
+            if (true)
+                switch (event.getCode()) {
+                    case UP:
+                        move.up(bomberman);
+                        break;
+                    case DOWN:
+                        move.down(bomberman);
+                        break;
+                    case LEFT:
+                        move.left(bomberman);
+                        break;
+                    case RIGHT:
+                        move.right(bomberman);
+                        break;
+                    case SPACE:
+                        ;
+                        break;
+                }
+        });
+
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
@@ -71,7 +96,7 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
     }
 
@@ -94,6 +119,7 @@ public class BombermanGame extends Application {
                     StringTokenizer tokenTile = new StringTokenizer(lineTile);
 
                     for (int j = 0; j < _width; j++) {
+                        //red: StringIndexOutOfBoundsException
                         char c = lineTile.charAt(j);
 
                         Entity object;

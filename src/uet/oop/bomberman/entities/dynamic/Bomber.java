@@ -1,5 +1,4 @@
-package uet.oop.bomberman.entities;
-
+package uet.oop.bomberman.entities.dynamic;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
@@ -7,11 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-public class Bomber extends Entity {
+public class Bomber extends dynamics {
 
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
     }
+
+    public Bomber() {}
 
     @Override
     public void update() {
