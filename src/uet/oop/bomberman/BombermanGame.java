@@ -46,7 +46,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
 
         // Tao scene
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,900,800);
 
         // Them scene vao stage
         stage.setScene(scene);

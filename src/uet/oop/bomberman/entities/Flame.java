@@ -1,2 +1,7 @@
-package uet.oop.bomberman.entities;public class Flame {
+package uet.oop.bomberman.entities;
+
+import uet.oop.bomberman.BombermanGame;
+
+public class Flame extends BombermanGame {
+
 }
