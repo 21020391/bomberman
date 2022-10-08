@@ -1,12 +1,10 @@
 package uet.oop.bomberman.act;
 
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicEntities.*;
-import uet.oop.bomberman.entities.staticEntities.Brick;
-import uet.oop.bomberman.entities.staticEntities.Grass;
-import uet.oop.bomberman.entities.staticEntities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
+
+import static uet.oop.bomberman.BombermanGame.*;
+
 
 public class move {
     public static void isRunning(dynamics object) {
@@ -14,51 +12,44 @@ public class move {
             setDirect(object.getDirection(), object, 8);
             object.setCount(object.getCount() - 1);
         }
-    }
-    public static boolean isCanMove( int a , int b ) {
-        Entity entity = BombermanGame.getEntity(a , b);
-        if (entity == null) {
-            return true;
-        } else if (entity instanceof Wall || entity instanceof Brick) {
-            return false;
-        } else {
-            return (entity instanceof Grass);
+        if ((object instanceof Ballom || object instanceof Oneal
+                || object instanceof Doll || object instanceof Kondoria)
+                && object.getCount() > 0) {
+            setDirect(object.getDirection(), object, 4);
+            object.setCount(object.getCount() - 1);
         }
     }
     public static void setDirect(String direction, dynamics object, int moving) {
         switch (direction) {
             case "up":
-                if (isCanMove(object.getX(), object.getY() - moving)) {
-                    up_step(object);
-                    object.setY(object.getY() - moving);
-                }
+                up_step(object);
+                object.setY(object.getY() - moving);
                 break;
             case "down":
-                if (isCanMove(object.getX(), object.getY() + moving)) {
-                    down_step(object);
-                    object.setY(object.getY() + moving);
-                }
+                down_step(object);
+                object.setY(object.getY() + moving);
                 break;
             case "left":
-                if (isCanMove(object.getX() - moving, object.getY())) {
-                    left_step(object);
-                    object.setX(object.getX() - moving);
-                }
+                left_step(object);
+                object.setX(object.getX() - moving);
                 break;
             case "right":
-                if (isCanMove(object.getX() + moving, object.getY())) {
-                    right_step(object);
-                    object.setX(object.getX() + moving);
-                }
+                right_step(object);
+                object.setX(object.getX() + moving);
                 break;
         }
     }
-
     public static void down(dynamics object) {
         if (object.getX() % 32 == 0 && object.getY() % 32 == 0) {
-            if (object instanceof Bomber && isCanMove(object.getX(), object.getY() + Sprite.DEFAULT_SIZE / 2)) {
+            if (object instanceof Bomber && isCanMove_down(object)) {
                 object.setDirection("down");
                 object.setCount(4);
+                isRunning(object);
+            }
+            if ((object instanceof Ballom || object instanceof Oneal || object instanceof Doll)
+                    && isCanMove_down(object)) {
+                object.setDirection("down");
+                object.setCount(8);
                 isRunning(object);
             }
         }
@@ -81,13 +72,64 @@ public class move {
                 object.setChangeImange(1);
             }
         }
+        if (object instanceof Ballom && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.balloom_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.balloom_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.balloom_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.balloom_right2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Oneal && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.oneal_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.oneal_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.oneal_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.oneal_right2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Doll && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.doll_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.doll_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.doll_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.doll_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
     }
 
     public static void up(dynamics object) {
         if (object.getX() % 32 == 0 && object.getY() % 32 == 0) {
-            if (object instanceof Bomber && isCanMove(object.getX(), object.getY() - Sprite.DEFAULT_SIZE / 2)) {
+            if (object instanceof Bomber && isCanMove_up(object)) {
                 object.setDirection("up");
                 object.setCount(4);
+                isRunning(object);
+            }
+            if ((object instanceof Ballom || object instanceof Oneal || object instanceof Doll)
+                    && isCanMove_up(object)) {
+                object.setDirection("up");
+                object.setCount(8);
                 isRunning(object);
             }
         }
@@ -109,13 +151,65 @@ public class move {
                 object.setChangeImange(1);
             }
         }
+        if (object instanceof Ballom && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.balloom_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.balloom_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.balloom_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.balloom_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Oneal && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.oneal_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.oneal_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.oneal_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.oneal_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Doll && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.doll_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.doll_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.doll_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.doll_right2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
     }
 
     public static void left(dynamics object) {
         if (object.getMoving() % 32 == 0 && object.getY() % 32 == 0) {
-            if (object instanceof Bomber && isCanMove(object.getX() - Sprite.DEFAULT_SIZE / 2, object.getY())) {
+            if (object instanceof Bomber && isCanMove_left(object)) {
                 object.setDirection("left");
                 object.setCount(4);
+                isRunning(object);
+            }
+            if ((object instanceof Ballom || object instanceof Oneal
+                    || object instanceof Doll || object instanceof Kondoria)
+                    && isCanMove_left(object)) {
+                object.setDirection("left");
+                object.setCount(8);
                 isRunning(object);
             }
         }
@@ -137,13 +231,80 @@ public class move {
                 object.setChangeImange(1);
             }
         }
+        if (object instanceof Ballom && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.balloom_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.balloom_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.balloom_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.balloom_right2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Oneal && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.oneal_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.oneal_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.oneal_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.oneal_right2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Doll && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.doll_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.doll_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.doll_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.doll_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Kondoria && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.kondoria_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.kondoria_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.kondoria_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.kondoria_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
     }
 
     public static void right(dynamics object) {
         if (object.getX() % 32 == 0 && object.getY() % 32 == 0) {
-            if (object instanceof Bomber && isCanMove(object.getX() + Sprite.DEFAULT_SIZE / 2, object.getY())) {
+            if (object instanceof Bomber && isCanMove_right(object)) {
                 object.setDirection("right");
                 object.setCount(4);
+                isRunning(object);
+            }
+            if ((object instanceof Ballom || object instanceof Oneal
+                    || object instanceof Doll || object instanceof Kondoria)
+                    && isCanMove_right(object)) {
+                object.setDirection("right");
+                object.setCount(8);
                 isRunning(object);
             }
         }
@@ -162,6 +323,66 @@ public class move {
                 object.setChangeImange(4);
             } else {
                 object.setImg(Sprite.player_right_2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Ballom && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.balloom_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.balloom_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.balloom_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.balloom_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Oneal && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.oneal_left1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.oneal_left2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.oneal_left3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.oneal_left2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Doll && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.doll_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.doll_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.doll_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.doll_right2.getFxImage());
+                object.setChangeImange(1);
+            }
+        }
+        if (object instanceof Kondoria && object.getY() % 8 == 0) {
+            if (object.getChangeImange() == 1) {
+                object.setImg(Sprite.kondoria_right1.getFxImage());
+                object.setChangeImange(2);
+            } else if (object.getChangeImange() == 2) {
+                object.setImg(Sprite.kondoria_right2.getFxImage());
+                object.setChangeImange(3);
+            } else if (object.getChangeImange() == 3) {
+                object.setImg(Sprite.kondoria_right3.getFxImage());
+                object.setChangeImange(4);
+            } else {
+                object.setImg(Sprite.kondoria_right2.getFxImage());
                 object.setChangeImange(1);
             }
         }

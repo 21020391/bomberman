@@ -23,6 +23,7 @@ public abstract class Entity {
     // Khởi tạo mặc định
     public Entity() {}
 
+
     // Thêm các phương thức setter/ getter
     public int getX() {
         return x;
@@ -50,10 +51,6 @@ public abstract class Entity {
 
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
-    }
-
-    public boolean compareCoordinate(int x, int y){
-        return this.x == x && this.y == y;
     }
 
     public abstract void update();

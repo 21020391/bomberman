@@ -46,7 +46,7 @@ public class BombermanGame extends Application {
     public static boolean running = true;
     private GraphicsContext gc;
     private Canvas canvas;
-    private static List<Entity> fixedEntities = new ArrayList<>();
+    public static List<Entity> fixedEntities = new ArrayList<>();
 
     // mang chua cac enemy
     public static List<dynamics> enemy = new ArrayList<>();
@@ -69,7 +69,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
 
         // Tao scene
-        Scene scene = new Scene(root,900,800);
+        Scene scene = new Scene(root);
 
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -162,18 +162,50 @@ public class BombermanGame extends Application {
         }
     }
 
-    public static Entity getEntity( int x , int y ) {
+    public static boolean isCanMove_up(dynamics object) {
         for (Entity e : fixedEntities) {
-            if (e.compareCoordinate(x , y)) return e;
+            if (e instanceof Grass) {
+                if (e.getX() == object.getX() && e.getY() == object.getY() - 32) {
+                    return true;
+                }
+            }
         }
-        if (bomb != null) {
-            if (bomb.compareCoordinate(x , y)) return bomb;
+        return false;
+    }
+    public static boolean isCanMove_down(dynamics object) {
+        for (Entity e : fixedEntities) {
+            if (e instanceof Grass) {
+                if (e.getX() == object.getX() && e.getY() == object.getY() + 32) {
+                    return true;
+                }
+            }
         }
-        return null;
+        return false;
+    }
+    public static boolean isCanMove_left(dynamics object) {
+        for (Entity e : fixedEntities) {
+            if (e instanceof Grass) {
+                if (e.getX() == object.getX() - 32 && e.getY() == object.getY()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isCanMove_right(dynamics object) {
+        for (Entity e : fixedEntities) {
+            if (e instanceof Grass) {
+                if (e.getX() == object.getX() + 32 && e.getY() == object.getY()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void update() {
-        enemy.forEach(dynamics::update);
+        fixedEntities.forEach(Entity::update);
+        enemy.forEach(Entity::update);
         bomberman.update();
         bomberman.setCountToRun(bomberman.getCountToRun() + 1);
         if (bomberman.getCountToRun() == 4) {
@@ -193,8 +225,8 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         portal.render(gc);
         fixedEntities.forEach(g -> g.render(gc));
-        bomberman.render(gc);
         enemy.forEach(g -> g.render(gc));
+        bomberman.render(gc);
         if (bomb != null) {
             bomb.render(gc);
         }
