@@ -40,14 +40,13 @@ public class BombermanGame extends Application {
     public static int _level = 1;
 
     public static dynamics bomberman;
-
-    public static Bomb bomb;
     public static Portal portal;
     public static boolean running = true;
     private GraphicsContext gc;
     private Canvas canvas;
     public static List<Entity> fixedEntities = new ArrayList<>();
-
+    // luu vi tri ki tu tren map
+    public static char[][] idObjects;
     // mang chua cac enemy
     public static List<dynamics> enemy = new ArrayList<>();
 
@@ -86,8 +85,7 @@ public class BombermanGame extends Application {
                     move.right(bomberman);
                     break;
                 case SPACE:
-                    bomb = new Bomb(bomberman.getX() / Sprite.SCALED_SIZE,
-                                        bomberman.getY() / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                    Bomb.putBomb();
             }
         });
 
@@ -122,6 +120,7 @@ public class BombermanGame extends Application {
             _width = Integer.parseInt(tokens.nextToken());
 
             while (sc.hasNextLine()) {
+                idObjects = new char[_width][_height];
                 for (int i = 0; i < _height; i++) {
                     String lineTile = sc.nextLine();
 
@@ -148,12 +147,13 @@ public class BombermanGame extends Application {
                                 break;
                             case 'x':
                                 portal = new Portal(j, i, Sprite.portal.getFxImage());
-                                fixedEntities.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                                fixedEntities.add(new Grass(j, i, Sprite.grass.getFxImage()));
                                 break;
                             default:
                                 fixedEntities.add(new Grass(j, i, Sprite.grass.getFxImage()));
                                 break;
                         }
+                        idObjects[j][i] = lineTile.charAt(j);
                     }
                 }
             }
@@ -203,15 +203,44 @@ public class BombermanGame extends Application {
         return false;
     }
 
+    public static boolean block_down_bomb(Entity entity) {
+        return idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == ' '
+                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == '*'
+                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == '1'
+                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == '2';
+    }
+
+    public static boolean block_up_bomb(Entity entity) {
+        return idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == ' '
+                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == '*'
+                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == '1'
+                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == '2';
+    }
+
+    public static boolean block_left_bomb(Entity entity) {
+        return idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == ' '
+                || idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == '*'
+                || idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == '1'
+                || idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == '2';
+    }
+
+    public static boolean block_right_bomb(Entity entity) {
+        return idObjects[entity.getX() / 32 + 1 ][entity.getY() / 32] == ' '
+                || idObjects[entity.getX() / 32 + 1][entity.getY() / 32] == '*'
+                || idObjects[entity.getX() / 32 + 1][entity.getY() / 32] == '1'
+                || idObjects[entity.getX() / 32 + 1][entity.getY() / 32] == '2';
+    }
     public void update() {
         fixedEntities.forEach(Entity::update);
         enemy.forEach(Entity::update);
         bomberman.update();
+
         bomberman.setCountToRun(bomberman.getCountToRun() + 1);
         if (bomberman.getCountToRun() == 4) {
             move.isRunning(bomberman);
             bomberman.setCountToRun(0);
         }
+
         for (dynamics a : enemy) {
             a.setCountToRun(a.getCountToRun() + 1);
             if (a.getCountToRun() == 8) {
@@ -227,8 +256,5 @@ public class BombermanGame extends Application {
         fixedEntities.forEach(g -> g.render(gc));
         enemy.forEach(g -> g.render(gc));
         bomberman.render(gc);
-        if (bomb != null) {
-            bomb.render(gc);
-        }
     }
 }
