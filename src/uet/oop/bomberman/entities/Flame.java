@@ -1,7 +1,17 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.BombermanGame;
+import javafx.scene.image.Image;
+import uet.oop.bomberman.entities.staticEntities.Brick;
 
-public class Flame extends BombermanGame {
+import java.util.function.Consumer;
 
+public class Flame extends Entity {
+    public Flame(int x, int y, Image img) {
+        super(x, y, img);
+    }
+
+    @Override
+    public void update() {
+
+    }
 }
