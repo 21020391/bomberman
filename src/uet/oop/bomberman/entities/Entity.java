@@ -2,10 +2,10 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.staticEntities.Brick;
+//import uet.oop.bomberman.entities.staticEntities.Brick;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.util.function.Consumer;
+//import java.util.function.Consumer;
 
 public abstract class Entity {
     protected static int x;
@@ -29,7 +29,7 @@ public abstract class Entity {
     }
 
     public void setX(int x) {
-        this.x = x;
+        Entity.x = x;
     }
 
     public int getY() {
@@ -37,7 +37,7 @@ public abstract class Entity {
     }
 
     public  void setY(int y) {
-        this.y = y;
+        Entity.y = y;
     }
 
     public Image getImg() {
