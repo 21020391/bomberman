@@ -12,7 +12,9 @@ public class Bomber extends dynamics {
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
     }
-
+    public Bomber(int moving, int changImage, String direction, int count, int countToRun) {
+        super(8, 1, "down", 0, 0);
+    }
     public Bomber() {}
 
     private void killBomber(dynamics bomberman) {
@@ -32,6 +34,11 @@ public class Bomber extends dynamics {
         }
     }
 
+    private void checkBombs() {
+        if (dead_position[bomberman.getX() / 32][bomberman.getY() / 32] == ' ')
+            bomberman.setLiving(false);
+    }
+
     private void checkEnemy() {
         int bombermanX = bomberman.getX() / 32;
         int bombermanY = bomberman.getY() / 32;
@@ -44,7 +51,7 @@ public class Bomber extends dynamics {
                 || bombermanX == enemyX && bombermanY == enemyY - 1
                 || bombermanX == enemyX + 1 && bombermanY == enemyY
                 || bombermanX == enemyX - 1 && bombermanY == enemyY) {
-                running = false;
+                bomberman.living = false;
                 break;
             }
         }
@@ -52,9 +59,10 @@ public class Bomber extends dynamics {
 
     @Override
     public void update() {
+        checkBombs();
         checkEnemy();
         countKill++;
-        if (!running) {
+        if (!bomberman.living) {
             killBomber(bomberman);
         }
     }
