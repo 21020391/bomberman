@@ -14,6 +14,8 @@ public abstract class Entity {
 
     protected Image img;
 
+    protected Sprite _sprite;
+
     public Entity(int xUnit, int yUnit, Image img) {
         x = xUnit * Sprite.SCALED_SIZE;
         y = yUnit * Sprite.SCALED_SIZE;
@@ -51,6 +53,11 @@ public abstract class Entity {
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
+
+    public boolean update(Entity e) {
+        return false;
+    }
+
 
     public abstract void update();
 }

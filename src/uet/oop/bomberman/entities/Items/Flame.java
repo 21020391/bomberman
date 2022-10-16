@@ -3,45 +3,36 @@ package uet.oop.bomberman.entities.Items;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.fixedEntities;
+
+import java.awt.*;
+
 import static uet.oop.bomberman.BombermanGame.idObjects;
 
-public class Flame extends Items {
+public class Flame extends Entity {
     protected int _direction;
     private int _radius;
-    protected Flame[] _flame = new Flame[0];
+    protected int xOrigin, yOrigin;
 
-    public Flame() {
+    protected FlameSegment[] _flameSegments = new FlameSegment[0];
 
-    }
-    public Flame(int x, int y, Image img,int direction, int radius) {
+    public Flame(int x, int y, Image img, int direction, int radius) {
         super(x, y, img);
+        xOrigin = x;
+        yOrigin = y;
         _direction = direction;
         _radius = radius;
-        createFlame();
+        createFlameSegments();
     }
 
-    private void createFlame() {
+    private void createFlameSegments() {
 
-    }
-
-    public Flame(boolean receive) {
-        super(receive);
     }
 
     @Override
     public void update() {
-        for (Entity entity : fixedEntities)
-            if (entity instanceof Speed && !this.receive)
-                if (idObjects[getX() * 16][entity.getY() * 16] == 2)
-                    entity.setImg(Sprite.powerup_flames.getFxImage());
 
-        if (!this.receive)
-            if (getX() == x && getY() == y) {
-                this.setImg(Sprite.grass.getFxImage());
-                this.receive = true;
-            }
     }
 }
-
