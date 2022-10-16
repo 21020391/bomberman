@@ -2,43 +2,44 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+//import uet.oop.bomberman.entities.staticEntities.Brick;
 import uet.oop.bomberman.graphics.Sprite;
 
-public abstract class Entity {
-    //Tọa độ X tính từ góc trái trên trong Canvas
-    protected int x;
+//import java.util.function.Consumer;
 
-    //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected int y;
+public abstract class Entity {
+    protected static int x;
+
+    protected static int y;
 
     protected Image img;
 
-    //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-    public Entity( int xUnit, int yUnit, Image img) {
-        this.x = xUnit * Sprite.SCALED_SIZE;
-        this.y = yUnit * Sprite.SCALED_SIZE;
+    protected Sprite _sprite;
+
+    public Entity(int xUnit, int yUnit, Image img) {
+        x = xUnit * Sprite.SCALED_SIZE;
+        y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;
     }
 
-    // Khởi tạo mặc định
-    public Entity() {}
+    public Entity() {
 
+    }
 
-    // Thêm các phương thức setter/ getter
-    public int getX() {
-        return x;
+    public static int getX() {
+        return 0;
     }
 
     public void setX(int x) {
-        this.x = x;
+        Entity.x = x;
     }
 
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public  void setY(int y) {
+        Entity.y = y;
     }
 
     public Image getImg() {
@@ -53,5 +54,12 @@ public abstract class Entity {
         gc.drawImage(img, x, y);
     }
 
+    public boolean update(Entity e) {
+        return false;
+    }
+
+
     public abstract void update();
 }
+
+
