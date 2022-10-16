@@ -8,12 +8,22 @@ import static uet.oop.bomberman.BombermanGame.fixedEntities;
 import static uet.oop.bomberman.BombermanGame.idObjects;
 
 public class Flame extends Items {
+    protected int _direction;
+    private int _radius;
+    protected Flame[] _flame = new Flame[0];
 
     public Flame() {
 
     }
-    public Flame(int x, int y, Image img) {
+    public Flame(int x, int y, Image img,int direction, int radius) {
         super(x, y, img);
+        _direction = direction;
+        _radius = radius;
+        createFlame();
+    }
+
+    private void createFlame() {
+
     }
 
     public Flame(boolean receive) {
