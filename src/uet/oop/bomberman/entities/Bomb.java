@@ -230,7 +230,7 @@ public class Bomb extends Entity {
             }
         }
     }
-    public static void checkExplosion () {
+    private static void checkExplosion () {
         if (isBomb == 2)
             if (System.currentTimeMillis() - timeBomb < 1000) {
                 if (System.currentTimeMillis() - timeTmp > 100) {
@@ -294,7 +294,7 @@ public class Bomb extends Entity {
 
     @Override
     public void update() {
-        checkActive();
         checkExplosion();
+        checkActive();
     }
 }

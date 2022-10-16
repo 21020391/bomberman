@@ -6,12 +6,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import static uet.oop.bomberman.BombermanGame._level;
+
 public class Menu {
     public static Text level, bomberman, time;
     public static int bombNumber = 20, timeNumber = 120;
 
     public static void createMenu(Group root) {
-        level = new Text("Level: 1");
+        level = new Text("Level: " + _level);
         level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         level.setFill(Color.WHITE);
         level.setX(416);
@@ -36,7 +39,7 @@ public class Menu {
     }
 
     public static void updateMenu() {
-        level.setText("Level: " + 1);
+        level.setText("Level: " + _level);
         bomberman.setText("Bombs: " + bombNumber);
     }
 }

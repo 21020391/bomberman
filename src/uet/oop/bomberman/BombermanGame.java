@@ -54,7 +54,7 @@ public class BombermanGame extends Application {
     // mang chua cac enemy
     public static List<dynamics> enemy = new ArrayList<>();
 
-    private int frame = 1;
+    private int frame;
     private long lastTime;
 
     public static void main(String[] args) {
@@ -107,6 +107,7 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                     render();
                     update();
+                    time();
             }
         };
         timer.start();
@@ -117,7 +118,6 @@ public class BombermanGame extends Application {
     public void createMap() {
         fixedEntities.clear();
         enemy.clear();
-        canvas.setDisable(true);
         final File level1 = new File("res/levels/Level1.txt");
         try (FileReader inputFile = new FileReader(level1)) {
             Scanner sc = new Scanner(inputFile);
@@ -158,7 +158,7 @@ public class BombermanGame extends Application {
                                 break;
                             case 'x':
                                 portal = new Portal(j, i, Sprite.portal.getFxImage());
-                                fixedEntities.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                                fixedEntities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                                 break;
                             default:
                                 fixedEntities.add(new Grass(j, i, Sprite.grass.getFxImage()));
@@ -267,6 +267,7 @@ public class BombermanGame extends Application {
         long now = System.currentTimeMillis();
         if (now - lastTime > 1000) {
             lastTime = System.currentTimeMillis();
+
             frame = 0;
 
             time.setText("Time: " + timeNumber);
