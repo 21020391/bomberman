@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.Items;
 
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.entities.staticEntities.Grass;
@@ -35,5 +36,7 @@ public class FlameItem extends Items {
         }
         return false;
     }
+
+
 }
 
