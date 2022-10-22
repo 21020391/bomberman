@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 
+import uet.oop.bomberman.act.Menu;
 import uet.oop.bomberman.act.move;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.dynamicEntities.Ballom;
@@ -21,7 +22,6 @@ import uet.oop.bomberman.entities.staticEntities.Portal;
 import uet.oop.bomberman.entities.staticEntities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +30,8 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import static uet.oop.bomberman.act.Menu.time;
-import static uet.oop.bomberman.act.Menu.timeNumber;
+import static uet.oop.bomberman.act.Menu.*;
+import static uet.oop.bomberman.entities.Bomb.*;
 
 public class BombermanGame extends Application {
     
@@ -72,6 +72,7 @@ public class BombermanGame extends Application {
 
         // Tao root container
         Group root = new Group();
+        Menu.createMenu(root);
         root.getChildren().add(canvas);
 
         // Tao scene
@@ -101,13 +102,18 @@ public class BombermanGame extends Application {
 
         // Them scene vao stage
         stage.setScene(scene);
+        stage.setTitle("Bomberman Game OOP BTL");
         stage.show();
+
+        lastTime = System.currentTimeMillis();
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                     render();
                     update();
                     time();
+                    updateMenu();
             }
         };
         timer.start();
@@ -118,6 +124,10 @@ public class BombermanGame extends Application {
     public void createMap() {
         fixedEntities.clear();
         enemy.clear();
+        powerBomb = 0;
+        timeNumber = 120;
+        bombNumber = 20;
+        isBomb = 0;
         final File level1 = new File("res/levels/Level1.txt");
         try (FileReader inputFile = new FileReader(level1)) {
             Scanner sc = new Scanner(inputFile);

@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.act.Menu.bombNumber;
 
 public class Bomb extends Entity {
     private static long timeBomb;
     private static long timeTmp;
-    private static int bombNumber = 20;
     private static Entity bomb;
     private static int swapActive = 1;
 
@@ -47,7 +47,8 @@ public class Bomb extends Entity {
             bomb = new Bomb(bomberman.getX() / Sprite.SCALED_SIZE,
                     bomberman.getY() / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
             fixedEntities.add(bomb);
-            idObjects[bomberman.getX() / 32][bomberman.getY() / 32] = ' ';
+            idObjects[bomberman.getX() / 32][bomberman.getY() / 32] = '0';
+            powerBomb++;
         }
     }
 
@@ -72,32 +73,32 @@ public class Bomb extends Entity {
     public static void explosionCenter() {
         if (swapExplosion == 1) {
             bomb.setImg(Sprite.bomb_exploded.getFxImage());
-            dead_position[bomb.getX() / 32][bomb.getY() / 32] = ' ';
+            dead_position[bomb.getX() / 32][bomb.getY() / 32] = '0';
             if (block_down_bomb(bomb, powerBombDown)) {
                 edge_down.setImg(Sprite.explosion_vertical_down_last.getFxImage());
-                dead_position[edge_down.getX() / 32][edge_down.getY() / 32] = ' ';
+                dead_position[edge_down.getX() / 32][edge_down.getY() / 32] = '0';
             }
             if (block_up_bomb(bomb, powerBombUp)) {
                 edge_up.setImg(Sprite.explosion_vertical_top_last.getFxImage());
-                dead_position[edge_up.getX() / 32][edge_up.getY() / 32] = ' ';
+                dead_position[edge_up.getX() / 32][edge_up.getY() / 32] = '0';
             }
             if (block_left_bomb(bomb, powerBombLeft)) {
                 edge_left.setImg(Sprite.explosion_horizontal_left_last.getFxImage());
-                dead_position[edge_left.getX() / 32][edge_left.getY() / 32] = ' ';
+                dead_position[edge_left.getX() / 32][edge_left.getY() / 32] = '0';
             }
             if (block_right_bomb(bomb, powerBombRight)) {
                 edge_right.setImg(Sprite.explosion_horizontal_right_last.getFxImage());
-                dead_position[edge_right.getX() / 32][edge_right.getY() / 32] = ' ';
+                dead_position[edge_right.getX() / 32][edge_right.getY() / 32] = '0';
             }
             if (listBombMiddleH.size() > 0)
                 for (Entity e : listBombMiddleH) {
                     e.setImg(Sprite.explosion_vertical.getFxImage());
-                    dead_position[e.getX() / 32][e.getY() / 32] = ' ';
+                    dead_position[e.getX() / 32][e.getY() / 32] = '0';
                 }
             if (listBombMiddleW.size() > 0)
                 for (Entity e : listBombMiddleW) {
                     e.setImg(Sprite.explosion_horizontal.getFxImage());
-                    dead_position[e.getX() / 32][e.getY() / 32] = ' ';
+                    dead_position[e.getX() / 32][e.getY() / 32] = '0';
                 }
             swapExplosion = 2;
 

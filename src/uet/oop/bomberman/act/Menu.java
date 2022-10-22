@@ -7,14 +7,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import static uet.oop.bomberman.BombermanGame._level;
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Menu {
     public static Text level, bomberman, time;
     public static int bombNumber = 20, timeNumber = 120;
 
     public static void createMenu(Group root) {
-        level = new Text("Level: " + _level);
+        level = new Text("Level: " + 1);
         level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         level.setFill(Color.WHITE);
         level.setX(416);
