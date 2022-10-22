@@ -11,8 +11,8 @@ public class FlameItem extends Items {
 
     private Board _board;
 
-    public FlameItem(int x, int y, Image img, Sprite sprite, Board _board) {
-        super(x, y, img, sprite);
+    public FlameItem(int x, int y, Image img, Board _board) {
+        super(x, y, img);
         this._board = _board;
     }
 
@@ -25,8 +25,6 @@ public class FlameItem extends Items {
 
     }
 
-
-    @Override
     public boolean collide(Entity e) {
 
         if (e instanceof Bomber) {

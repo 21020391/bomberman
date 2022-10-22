@@ -52,7 +52,6 @@ public class FlameSegment extends Entity {
 
     }
 
-    @Override
     public boolean collide(Entity e) {
         if(e instanceof Character) {
             ((Character) e).kill();
