@@ -9,7 +9,7 @@ public abstract class dynamics extends Entity {
     protected int moving;
 
     // chuyen anh dong
-    protected int changeImange;
+    protected int changeImange = 1;
 
     // huong di cua bomberman
     protected String direction;
@@ -19,15 +19,23 @@ public abstract class dynamics extends Entity {
 
     //chay sau khi dem frame
     protected int countToRun;
+    protected boolean living = true;
 
     public dynamics(int x, int y, Image img) { super(x, y, img); }
 
+    public dynamics(int moving, int changeImange, String direction, int count, int countToRun) {
+        this.moving = moving;
+        this.changeImange = changeImange;
+        this.direction = direction;
+        this.count = count;
+        this.countToRun = countToRun;
+    }
     public int getMoving() {
         return moving;
     }
 
     public int getChangeImange() {
-        return changeImange;
+        return Math.max(changeImange, 1);
     }
 
     public void setChangeImange(int changeImange) {
@@ -58,7 +66,19 @@ public abstract class dynamics extends Entity {
         this.countToRun = countToRun;
     }
 
-    public dynamics() {}
+    public void setLiving(boolean living) {
+        this.living = living;
+    }
+
+    public boolean isLiving() {
+        return living;
+    }
+    public dynamics(boolean living){
+        this.living = living;
+    }
+
+    public dynamics() {
+    }
 
     @Override
     public void update() {}

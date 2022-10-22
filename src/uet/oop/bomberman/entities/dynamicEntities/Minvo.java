@@ -8,30 +8,30 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.BombermanGame._width;
 import static uet.oop.bomberman.BombermanGame.enemy;
 
-public class Kondoria extends dynamics {
+public class Minvo extends dynamics {
     private static int swapKill = 1;
     private static int countKill = 0;
     private static boolean dir;
 
-    public Kondoria(int x, int y, Image img) {
+    public Minvo(int x, int y, Image img) {
         super( x, y, img);
     }
 
-    public Kondoria(int isMove, int swap, String direction, int count, int countToRun) {
+    public Minvo(int isMove, int swap, String direction, int count, int countToRun) {
         super(4, 1, "up", 0, 0);
     }
 
-    public Kondoria(boolean life) {
+    public Minvo(boolean life) {
         super(life);
     }
 
-    public Kondoria() {
+    public Minvo() {
     }
 
-    private void killKondoria(dynamics object) {
+    private void killMinvo(dynamics object) {
         if (countKill % 16 == 0) {
             if (swapKill == 1) {
-                object.setImg(Sprite.kondoria_dead.getFxImage());
+                object.setImg(Sprite.minvo_dead.getFxImage());
                 swapKill = 2;
             } else if (swapKill == 2) {
                 object.setImg(Sprite.player_dead3.getFxImage());
@@ -46,8 +46,8 @@ public class Kondoria extends dynamics {
     public void update() {
         countKill++;
         for (dynamics object : enemy) {
-            if (object instanceof Kondoria && !object.living)
-                killKondoria(object);
+            if (object instanceof Minvo && !object.living)
+                killMinvo(object);
         }
 
         if (this.y % 16 == 0 && this.x % 16 == 0) {

@@ -30,6 +30,9 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import static uet.oop.bomberman.act.Menu.time;
+import static uet.oop.bomberman.act.Menu.timeNumber;
+
 public class BombermanGame extends Application {
     
     public static final int WIDTH = 31;
@@ -47,8 +50,12 @@ public class BombermanGame extends Application {
     public static List<Entity> fixedEntities = new ArrayList<>();
     // luu vi tri ki tu tren map
     public static char[][] idObjects;
+    public static char[][] dead_position;
     // mang chua cac enemy
     public static List<dynamics> enemy = new ArrayList<>();
+
+    private int frame;
+    private long lastTime;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -71,21 +78,24 @@ public class BombermanGame extends Application {
         Scene scene = new Scene(root);
 
         scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case UP:
-                    move.up(bomberman);
-                    break;
-                case DOWN:
-                    move.down(bomberman);
-                    break;
-                case LEFT:
-                    move.left(bomberman);
-                    break;
-                case RIGHT:
-                    move.right(bomberman);
-                    break;
-                case SPACE:
-                    Bomb.putBomb();
+            if (bomberman.isLiving()) {
+                switch (event.getCode()) {
+                    case UP:
+                        move.up(bomberman);
+                        break;
+                    case DOWN:
+                        move.down(bomberman);
+                        break;
+                    case LEFT:
+                        move.left(bomberman);
+                        break;
+                    case RIGHT:
+                        move.right(bomberman);
+                        break;
+                    case SPACE:
+                        Bomb.putBomb();
+                        break;
+                }
             }
         });
 
@@ -97,6 +107,7 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                     render();
                     update();
+                    time();
             }
         };
         timer.start();
@@ -107,7 +118,6 @@ public class BombermanGame extends Application {
     public void createMap() {
         fixedEntities.clear();
         enemy.clear();
-        canvas.setDisable(true);
         final File level1 = new File("res/levels/Level1.txt");
         try (FileReader inputFile = new FileReader(level1)) {
             Scanner sc = new Scanner(inputFile);
@@ -121,6 +131,7 @@ public class BombermanGame extends Application {
 
             while (sc.hasNextLine()) {
                 idObjects = new char[_width][_height];
+                dead_position = new char[_width][_height];
                 for (int i = 0; i < _height; i++) {
                     String lineTile = sc.nextLine();
 
@@ -147,7 +158,7 @@ public class BombermanGame extends Application {
                                 break;
                             case 'x':
                                 portal = new Portal(j, i, Sprite.portal.getFxImage());
-                                fixedEntities.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                                fixedEntities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                                 break;
                             default:
                                 fixedEntities.add(new Grass(j, i, Sprite.grass.getFxImage()));
@@ -203,32 +214,24 @@ public class BombermanGame extends Application {
         return false;
     }
 
-    public static boolean block_down_bomb(Entity entity) {
-        return idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == ' '
-                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == '*'
-                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == '1'
-                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1] == '2';
+    public static boolean block_down_bomb(Entity entity, int power) {
+        return idObjects[entity.getX() / 32][entity.getY() / 32 + 1 + power] == ' '
+                || idObjects[entity.getX() / 32][entity.getY() / 32 + 1 + power] == '*';
     }
 
-    public static boolean block_up_bomb(Entity entity) {
-        return idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == ' '
-                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == '*'
-                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == '1'
-                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1] == '2';
+    public static boolean block_up_bomb(Entity entity, int power) {
+        return idObjects[entity.getX() / 32][entity.getY() / 32 - 1 - power] == ' '
+                || idObjects[entity.getX() / 32][entity.getY() / 32 - 1 - power] == '*';
     }
 
-    public static boolean block_left_bomb(Entity entity) {
-        return idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == ' '
-                || idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == '*'
-                || idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == '1'
-                || idObjects[entity.getX() / 32 - 1][entity.getY() / 32] == '2';
+    public static boolean block_left_bomb(Entity entity, int power) {
+        return idObjects[entity.getX() / 32 - 1 - power][entity.getY() / 32] == ' '
+                || idObjects[entity.getX() / 32 - 1 - power][entity.getY() / 32] == '*';
     }
 
-    public static boolean block_right_bomb(Entity entity) {
-        return idObjects[entity.getX() / 32 + 1 ][entity.getY() / 32] == ' '
-                || idObjects[entity.getX() / 32 + 1][entity.getY() / 32] == '*'
-                || idObjects[entity.getX() / 32 + 1][entity.getY() / 32] == '1'
-                || idObjects[entity.getX() / 32 + 1][entity.getY() / 32] == '2';
+    public static boolean block_right_bomb(Entity entity, int power) {
+        return idObjects[entity.getX() / 32 + 1 + power][entity.getY() / 32] == ' '
+                || idObjects[entity.getX() / 32 + 1 + power][entity.getY() / 32] == '*';
     }
     public void update() {
         fixedEntities.forEach(Entity::update);
@@ -256,5 +259,21 @@ public class BombermanGame extends Application {
         fixedEntities.forEach(g -> g.render(gc));
         enemy.forEach(g -> g.render(gc));
         bomberman.render(gc);
+    }
+
+    public void time() {
+        frame++;
+
+        long now = System.currentTimeMillis();
+        if (now - lastTime > 1000) {
+            lastTime = System.currentTimeMillis();
+
+            frame = 0;
+
+            time.setText("Time: " + timeNumber);
+            timeNumber--;
+            if (timeNumber < 0)
+                bomberman.setLiving(false);
+        }
     }
 }
