@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 public abstract class Items extends Entity {
     protected boolean receive = false;
 
+
     /**
      * khai bao ham khong tham so.
      */
@@ -21,7 +22,10 @@ public abstract class Items extends Entity {
     public Items(int x, int y, Image img) {
         super(x, y, img);
     }
-
+    private static final int BOMBRADIUS = 1;
+    private static final double BOMBERSPEED = 1.0;
+    protected static int bombRadius = BOMBRADIUS;
+    protected static double bomberSpeed = BOMBERSPEED;
     public Items(boolean receive) {
         this.receive = receive;
     }
@@ -38,8 +42,22 @@ public abstract class Items extends Entity {
         this.receive = receive;
     }
 
-    @Override
-    public void update() {
-
+    public static int getBombRadius() {
+        return bombRadius;
     }
+
+    public static void setBombRadius(int bombRadius) {
+        Items.bombRadius = bombRadius;
+    }
+
+    public static double getBomberSpeed() {
+        return bomberSpeed;
+    }
+
+    public static void setBomberSpeed(double bomberSpeed) {
+        Items.bomberSpeed = bomberSpeed;
+    }
+
+
+
 }

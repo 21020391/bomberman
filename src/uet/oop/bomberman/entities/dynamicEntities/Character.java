@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.dynamicEntities;
+/*package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.entities.AnimateEntity;
 import uet.oop.bomberman.entities.Items.Board;
@@ -10,39 +10,38 @@ public abstract class Character extends AnimateEntity {
     protected boolean _moving = false;
     public int _timeAfter = 40;
 
-    public Character(int x, int y, Board board)
+  /*  public Character(int x, int y, Board board)
     {
         this.x = x;
         this.y = y;
         _board = board;
     }
 
-    @Override
-    public abstract void update();
+
 
 
 
     /**
      * Tính toán hướng đi
      */
-    protected abstract void calculateMove();
+   /* protected abstract void calculateMove();
 
     protected abstract void move(double xa, double ya);
 
     /**
      * Được gọi khi đối tượng bị tiêu diệt
      */
-    public abstract void kill();
+   /* public abstract void kill();
 
     /**
      * Xử lý hiệu ứng bị tiêu diệt
      */
-    protected abstract void afterKill();
+    /*protected abstract void afterKill();
 
     /**
      * Kiểm tra xem đối tượng có di chuyển tới vị trí đã tính toán hay không
      */
-    protected abstract boolean canMove(double x, double y);
+  /*  protected abstract boolean canMove(double x, double y);
 
 
 
@@ -56,4 +55,4 @@ public abstract class Character extends AnimateEntity {
             _animate++;
         else _animate = 0;
     }
-}
+}*/

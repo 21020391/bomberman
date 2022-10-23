@@ -7,23 +7,27 @@ import uet.oop.bomberman.entities.staticEntities.Grass;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Game;
 
-public class FlameItem extends Items {
+
+public class SpeedItem extends Items {
 
     private Board _board;
 
-
-    public FlameItem(int x, int y, Image img, Sprite sprite, Board board) {
+    public SpeedItem(int x, int y, Image img, Board board) {
         super(x, y, img);
         _board = board;
-        _sprite = sprite;
+    }
+
+    public SpeedItem() {
+
     }
 
     public boolean collide(Entity e) {
         if (e instanceof Bomber) {
             _board.addEntity((int) (this.x + this.y * _board.getLevel().getWidth()), new Grass((int) this.x, (int) this.y, Sprite.grass.getFxImage()));
-            Game.addBombRadius(1);
+            Game.addBomberSpeed(0.2);
         }
         return false;
     }
-}
 
+
+}

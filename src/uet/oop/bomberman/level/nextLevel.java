@@ -5,6 +5,7 @@ public class nextLevel {
     public static boolean wait;
     public static long waitingTime;
 
+
     public static void waitToLevelUp() {
         if (wait) {
             long now = System.currentTimeMillis();
