@@ -1,26 +1,32 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
-import uet.oop.bomberman.entities.AnimateEntity;
-import uet.oop.bomberman.entities.Items.Board;
+import uet.oop.bomberman.Board;
+import uet.oop.bomberman.Game;
+import uet.oop.bomberman.entities.AnimatedEntity;
+import uet.oop.bomberman.graphics.Screen;
 
-public abstract class Character extends AnimateEntity {
+/**
+ * Bao gồm Bomber và Enemy
+ */
+public abstract class Character extends AnimatedEntity {
+
     protected Board _board;
     protected int _direction = -1;
     protected boolean _alive = true;
     protected boolean _moving = false;
     public int _timeAfter = 40;
 
-    public Character(int x, int y, Board board)
-    {
-        this.x = x;
-        this.y = y;
+    public Character(int x, int y, Board board) {
+        _x = x;
+        _y = y;
         _board = board;
     }
 
     @Override
     public abstract void update();
 
-
+    @Override
+    public abstract void render(Screen screen);
 
     /**
      * Tính toán hướng đi
@@ -44,16 +50,12 @@ public abstract class Character extends AnimateEntity {
      */
     protected abstract boolean canMove(double x, double y);
 
-
-
-    protected int _animate = 0;
-
-    protected final int MAX_ANIMATE = 7500;
-
-    protected void animate()
-    {
-        if (_animate < MAX_ANIMATE)
-            _animate++;
-        else _animate = 0;
+    protected double getXMessage() {
+        return (_x * Game.SCALE) + (_sprite.SIZE / 2 * Game.SCALE);
     }
+
+    protected double getYMessage() {
+        return (_y* Game.SCALE) - (_sprite.SIZE / 2 * Game.SCALE);
+    }
+
 }

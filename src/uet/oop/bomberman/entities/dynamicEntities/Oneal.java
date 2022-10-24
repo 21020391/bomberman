@@ -1,67 +1,39 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 
-import javafx.scene.image.Image;
-import uet.oop.bomberman.act.move;
+import uet.oop.bomberman.Board;
+import uet.oop.bomberman.Game;
+import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.bomberman;
-import static uet.oop.bomberman.BombermanGame.enemy;
+public class Oneal extends Enemy {
 
-public class Oneal extends dynamics {
-    private static int swapKill = 1;
-    private static int countKill = 0;
+    public Oneal(int x, int y, Board board) {
+        super(x, y, board, Sprite.oneal_dead, Game.getBomberSpeed()/2, 200);
 
-    public Oneal(int x, int y, Image img) {
-        super( x, y, img);
-    }
+        _sprite = Sprite.oneal_left1;
 
-    public Oneal(int isMove, int swap, String direction, int count, int countToRun) {
-        super(4, 1, "up", 0, 0);
-    }
-
-    public Oneal(boolean life) {
-        super(life);
-    }
-
-    public Oneal() {
-    }
-    private void killOneal(dynamics object) {
-        if (countKill % 16 == 0) {
-            if (swapKill == 1) {
-                object.setImg(Sprite.oneal_dead.getFxImage());
-                swapKill = 2;
-            } else if (swapKill == 2) {
-                object.setImg(Sprite.player_dead3.getFxImage());
-                swapKill = 3;
-            } else {
-                object.setLiving(false);
-                enemy.remove(object);
-                swapKill = 1;
-            }
-        }
+        _ai = new AIMedium(_board.getBomber(), this, _board);
+        _direction  = _ai.calculateDirection();
     }
 
     @Override
-    public void update() {
-        countKill++;
-        for (dynamics object: enemy) {
-            if (object instanceof Oneal && !object.living)
-                killOneal(object);
-        }
-        if (this.y % 16 == 0 && this.x % 16 == 0) {
-            if (bomberman.getX() < this.x) {
-                move.left(this);
-            }
-            if (bomberman.getX() > this.x) {
-                move.right(this);
-            }
-            if (bomberman.getY() > this.y) {
-                move.down(this);
-            }
-            if (bomberman.getY() < this.y) {
-                move.up(this);
-            }
+    protected void chooseSprite() {
+        switch(_direction) {
+            case 0:
+            case 1:
+                if(_moving)
+                    _sprite = Sprite.movingSprite(Sprite.oneal_right1, Sprite.oneal_right2, Sprite.oneal_right3, _animate, 60);
+                else
+                    _sprite = Sprite.oneal_left1;
+                break;
+            case 2:
+            case 3:
+                if(_moving)
+                    _sprite = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left2, Sprite.oneal_left3, _animate, 60);
+                else
+                    _sprite = Sprite.oneal_left1;
+                break;
         }
     }
 }

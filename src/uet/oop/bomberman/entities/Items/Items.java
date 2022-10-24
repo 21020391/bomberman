@@ -1,47 +1,12 @@
 package uet.oop.bomberman.entities.Items;
 
-import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.staticEntities.Tile;
 import uet.oop.bomberman.graphics.Sprite;
 
-public abstract class Items extends Entity {
-    protected boolean receive = false;
+public abstract class Items extends Tile {
 
-    /**
-     * khai bao ham khong tham so.
-     */
-
-    public Items() {
-
+    public Items(int x, int y, Sprite sprite) {
+        super(x, y, sprite);
     }
 
-    /**
-     * khai bao ham chua tham so.
-     */
-
-    public Items(int x, int y, Image img) {
-        super(x, y, img);
-
-    }
-
-    public Items(boolean receive) {
-        this.receive = receive;
-    }
-
-    /**
-     * getter/setter.
-     */
-
-    public boolean isReceive() {
-        return receive;
-    }
-
-    public void setReceive(boolean receive) {
-        this.receive = receive;
-    }
-
-    @Override
-    public void update() {
-
-    }
 }

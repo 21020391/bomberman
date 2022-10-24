@@ -1,16 +1,12 @@
 package uet.oop.bomberman.entities.staticEntities;
 
-import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
 
-public class Wall extends Entity {
+import uet.oop.bomberman.graphics.Sprite;
 
-    public Wall(int x, int y, Image img) {
-        super(x, y, img);
+public class Wall extends Tile {
+
+    public Wall(int x, int y, Sprite sprite) {
+        super(x, y, sprite);
     }
 
-    @Override
-    public void update() {
-
-    }
 }

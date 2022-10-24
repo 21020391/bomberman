@@ -1,16 +1,18 @@
 package uet.oop.bomberman.entities.staticEntities;
 
-import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
 
-public class Grass extends Entity {
-
-    public Grass(int x, int y, Image img) {
-        super(x, y, img);
+public class Grass extends Tile {
+    public Grass(int x, int y, Sprite sprite) {
+        super(x, y, sprite);
     }
 
+    /**
+     * Cho bất kì đối tượng khác đi qua.
+     */
     @Override
-    public void update() {
-
+    public boolean collide(Entity e) {
+        return true;
     }
 }

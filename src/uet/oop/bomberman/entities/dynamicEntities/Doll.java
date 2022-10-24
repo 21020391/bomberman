@@ -1,53 +1,39 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
-import javafx.scene.image.Image;
+import uet.oop.bomberman.Board;
+import uet.oop.bomberman.Game;
+import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AILow;
 import uet.oop.bomberman.graphics.Sprite;
-import static uet.oop.bomberman.BombermanGame.enemy;
 
-public class Doll extends dynamics {
-    private static int swapKill = 1;
-    private static int countKill = 0;
+public class Doll extends Enemy {
 
-    public Doll(int x, int y, Image img) {
-        super( x, y, img);
+
+    public Doll(int x, int y, Board board) {
+        super(x, y, board, Sprite.doll_dead, Game.getBomberSpeed(), 400);
+
+        _sprite = Sprite.doll_right1;
+
+        _ai = new AILow();
+        _direction = _ai.calculateDirection();
     }
-
-    public Doll(int moving, int changeImage, String direction, int count, int countToRun) {
-        super(4, 1, "up", 0, 0);
-    }
-
-    public Doll(boolean life) {
-        super(life);
-    }
-
-    public Doll() {
-    }
-
-    private void killDoll(dynamics object) {
-        if (countKill % 16 == 0) {
-            if (swapKill == 1) {
-                object.setImg(Sprite.doll_dead.getFxImage());
-                swapKill = 2;
-            } else if (swapKill == 2) {
-                object.setImg(Sprite.player_dead3.getFxImage());
-                swapKill = 3;
-            } else {
-                object.setLiving(false);
-                enemy.remove(object);
-                swapKill = 1;
-            }
-        }
-    }
-    //...
-    private void moveDoll() {}
 
     @Override
-    public void update() {
-        countKill++;
-        for (dynamics object : enemy) {
-            if (object instanceof Doll && !object.living)
-                killDoll(object);
+    protected void chooseSprite() {
+        switch(_direction) {
+            case 0:
+            case 1:
+                if(_moving)
+                    _sprite = Sprite.movingSprite(Sprite.doll_right1, Sprite.doll_right2, Sprite.doll_right3, _animate, 60);
+                else
+                    _sprite = Sprite.doll_left1;
+                break;
+            case 2:
+            case 3:
+                if(_moving)
+                    _sprite = Sprite.movingSprite(Sprite.doll_left1, Sprite.doll_left2, Sprite.doll_left3, _animate, 60);
+                else
+                    _sprite = Sprite.doll_left1;
+                break;
         }
-        moveDoll();
     }
 }
