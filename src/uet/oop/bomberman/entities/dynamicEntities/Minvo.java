@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -9,7 +9,7 @@ public class Minvo extends Enemy {
 
 
     public Minvo(int x, int y, Board board) {
-        super(x, y, board, Sprite.minvo_dead, Game.getBomberSpeed(), 800);
+        super(x, y, board, Sprite.minvo_dead, BombermanGame.getBomberSpeed(), 800);
 
         _sprite = Sprite.minvo_right1;
 

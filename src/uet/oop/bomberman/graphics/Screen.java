@@ -1,10 +1,6 @@
 package uet.oop.bomberman.graphics;
-
-import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.dynamicEntities.Bomber;
-
 import java.awt.*;
 import java.util.Arrays;
 
@@ -62,65 +58,26 @@ public class Screen {
             }
         }
     }
-
-    public static void setOffset(int xO, int yO) {
-        xOffset = xO;
-        yOffset = yO;
-    }
-
-    public static int calculateXOffset(Board board, Bomber bomber) {
-        if(bomber == null) return 0;
-        int temp = xOffset;
-
-        double BomberX = bomber.getX() / 16;
-        double complement = 0.5;
-        int firstBreakpoint = board.getWidth() / 4;
-        int lastBreakpoint = board.getWidth() - firstBreakpoint;
-
-        if( BomberX > firstBreakpoint + complement && BomberX < lastBreakpoint - complement) {
-            temp = (int)bomber.getX()  - (Game.WIDTH / 2);
-        }
-
-        return temp;
-    }
-
-    //TODO:
-//	public static int calculateXOffset(Board board, AutomaticBomber bomber) {
-//		if (bomber == null) return 0;
-//		int temp = xOffset;
-//
-//		double BomberX = bomber.getX() / 16;
-//		double complement = 0.5;
-//		int firstBreakpoint = board.getWidth() / 4;
-//		int lastBreakpoint = board.getWidth() - firstBreakpoint;
-//
-//		if (BomberX > firstBreakpoint + complement && BomberX < lastBreakpoint - complement) {
-//			temp = (int) bomber.getX() - (Game.WIDTH / 2);
-//		}
-//
-//		return temp;
-//	}
-
     public void drawEndGame(Graphics g, int points) {
         g.setColor(Color.black);
         g.fillRect(0, 0, getRealWidth(), getRealHeight());
 
-        Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+        Font font = new Font("Arial", Font.PLAIN, 20 * BombermanGame.SCALE);
         g.setFont(font);
         g.setColor(Color.white);
         drawCenteredString("GAME OVER", getRealWidth(), getRealHeight(), g);
 
-        font = new Font("Arial", Font.PLAIN, 10 * Game.SCALE);
+        font = new Font("Arial", Font.PLAIN, 10 * BombermanGame.SCALE);
         g.setFont(font);
         g.setColor(Color.yellow);
-        drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (Game.TILES_SIZE * 2) * Game.SCALE, g);
+        drawCenteredString("POINTS: " + points, getRealWidth(), getRealHeight() + (BombermanGame.TILES_SIZE * 2) * BombermanGame.SCALE, g);
     }
 
     public void drawChangeLevel(Graphics g, int level) {
         g.setColor(Color.black);
         g.fillRect(0, 0, getRealWidth(), getRealHeight());
 
-        Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+        Font font = new Font("Arial", Font.PLAIN, 20 * BombermanGame.SCALE);
         g.setFont(font);
         g.setColor(Color.white);
         drawCenteredString("LEVEL " + level, getRealWidth(), getRealHeight(), g);
@@ -128,7 +85,7 @@ public class Screen {
     }
 
     public void drawPaused(Graphics g) {
-        Font font = new Font("Arial", Font.PLAIN, 20 * Game.SCALE);
+        Font font = new Font("Arial", Font.PLAIN, 20 * BombermanGame.SCALE);
         g.setFont(font);
         g.setColor(Color.white);
         drawCenteredString("PAUSED", getRealWidth(), getRealHeight(), g);
@@ -137,7 +94,9 @@ public class Screen {
 
     public void drawCenteredString(String s, int w, int h, Graphics g) {
         FontMetrics fm = g.getFontMetrics();
+        //real width - len(s)
         int x = (w - fm.stringWidth(s)) / 2;
+        //real height - (nua tren duong can + nua duoi duong can)
         int y = (fm.getAscent() + (h - (fm.getAscent() + fm.getDescent())) / 2);
         g.drawString(s, x, y);
     }
@@ -151,10 +110,10 @@ public class Screen {
     }
 
     public int getRealWidth() {
-        return _width * Game.SCALE;
+        return _width * BombermanGame.SCALE;
     }
 
     public int getRealHeight() {
-        return _height * Game.SCALE;
+        return _height * BombermanGame.SCALE;
     }
 }

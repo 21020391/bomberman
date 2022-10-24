@@ -1,6 +1,6 @@
 package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,13 +10,13 @@ import java.awt.*;
  */
 public class GamePanel extends JPanel {
 
-    private Game _game;
+    private BombermanGame _game;
 
     public GamePanel(Frame frame) {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE));
+        setPreferredSize(new Dimension(BombermanGame.WIDTH * BombermanGame.SCALE, BombermanGame.HEIGHT * BombermanGame.SCALE));
 
-        _game = new Game(frame);
+        _game = new BombermanGame(frame);
 
         add(_game);
 
@@ -27,7 +27,7 @@ public class GamePanel extends JPanel {
 
     }
 
-    public Game getGame() {
+    public BombermanGame getGame() {
         return _game;
     }
 

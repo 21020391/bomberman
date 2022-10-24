@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.Flame;
@@ -58,19 +58,12 @@ public class Bomber extends Character {
 
     @Override
     public void render(Screen screen) {
-        calculateXOffset();
-
         if (_alive)
             chooseSprite();
         else
             _sprite = Sprite.player_dead1;
 
         screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
-    }
-
-    public void calculateXOffset() {
-        int xScroll = Screen.calculateXOffset(_board, this);
-        Screen.setOffset(xScroll, 0);
     }
 
     /**
@@ -82,13 +75,13 @@ public class Bomber extends Character {
         // TODO: _timeBetweenPutBombs dùng để ngăn chặn Bomber đặt 2 Bomb cùng tại 1 vị trí trong 1 khoảng thời gian quá ngắn
         // TODO: nếu 3 điều kiện trên thỏa mãn thì thực hiện đặt bom bằng placeBomb()
         // TODO: sau khi đặt, nhớ giảm số lượng Bomb Rate và reset _timeBetweenPutBombs về 0
-        if(_input.space && Game.getBombRate() > 0 && _timeBetweenPutBombs < 0) {
+        if(_input.space && BombermanGame.getBombRate() > 0 && _timeBetweenPutBombs < 0) {
 
             int xt = Coordinates.pixelToTile(_x + _sprite.getSize() / 2);
             int yt = Coordinates.pixelToTile( (_y + _sprite.getSize() / 2) - _sprite.getSize() ); //trừ một nửa chiều cao của người chơi và trừ đi 1 vị trí y
             System.out.println(xt + " " + yt);
             placeBomb(xt, yt);
-            Game.addBombRate(-1);
+            BombermanGame.addBombRate(-1);
 
             _timeBetweenPutBombs = 30;
         }
@@ -109,7 +102,7 @@ public class Bomber extends Character {
             b = bs.next();
             if (b.isRemoved()) {
                 bs.remove();
-                Game.addBombRate(1);
+                BombermanGame.addBombRate(1);
             }
         }
 
@@ -118,7 +111,7 @@ public class Bomber extends Character {
     @Override
     public void kill() {
         bomberDieSound.play();
-        Game.getBackgoundSound().stop();
+        BombermanGame.getBackgoundSound().stop();
         if (!_alive) return;
         _alive = false;
     }
@@ -143,7 +136,7 @@ public class Bomber extends Character {
         if(_input.right) xa++;
 
         if(xa != 0 || ya != 0)  {
-            move(xa * Game.getBomberSpeed(), ya * Game.getBomberSpeed());
+            move(xa * BombermanGame.getBomberSpeed(), ya * BombermanGame.getBomberSpeed());
             _moving = true;
         } else {
             _moving = false;
@@ -154,8 +147,8 @@ public class Bomber extends Character {
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
         for (int c = 0; c < 4; c++) { //phát hiện xung đột cho mỗi góc của người chơi
-            double xt = ((_x + x) + c % 2 * 11) / Game.TILES_SIZE; //chia với kích thước gạch để chuyển sang tọa độ ô
-            double yt = ((_y + y) + c / 2 * 12 - 13) / Game.TILES_SIZE; //các giá trị này là tốt nhất từ nhiều thử nghiệm
+            double xt = ((_x + x) + c % 2 * 11) / BombermanGame.TILES_SIZE; //chia với kích thước gạch để chuyển sang tọa độ ô
+            double yt = ((_y + y) + c / 2 * 12 - 13) / BombermanGame.TILES_SIZE; //các giá trị này là tốt nhất từ nhiều thử nghiệm
 
             Entity a = _board.getEntity(xt, yt, this);
 

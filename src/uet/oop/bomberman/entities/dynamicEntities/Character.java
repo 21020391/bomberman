@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Screen;
 
@@ -49,13 +48,4 @@ public abstract class Character extends AnimatedEntity {
      * Kiểm tra xem đối tượng có di chuyển tới vị trí đã tính toán hay không
      */
     protected abstract boolean canMove(double x, double y);
-
-    protected double getXMessage() {
-        return (_x * Game.SCALE) + (_sprite.SIZE / 2 * Game.SCALE);
-    }
-
-    protected double getYMessage() {
-        return (_y* Game.SCALE) - (_sprite.SIZE / 2 * Game.SCALE);
-    }
-
 }

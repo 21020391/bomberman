@@ -8,10 +8,10 @@ import uet.oop.bomberman.Sound.Audio;
 
 import java.io.File;
 
-public class SpeedItem extends Items {
+public class BombItem extends Items {
     private Audio eatItem;
 
-    public SpeedItem(int x, int y, Sprite sprite) {
+    public BombItem(int x, int y, Sprite sprite) {
         super(x, y, sprite);
         eatItem = new Audio(new File("res/Sound/EatItemp2.wav"));
     }
@@ -22,13 +22,14 @@ public class SpeedItem extends Items {
         if(e instanceof Bomber){
             if(this.isRemoved())
                 return true;
-            BombermanGame.addBomberSpeed(0.5);
+            BombermanGame.addBombRate(1);
             remove();
             eatItem.play();
             return true;
         }
         return false;
     }
+
 
 
 }

@@ -1,6 +1,6 @@
 package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +17,12 @@ public class Frame extends JFrame {
 
         JPanel _containerpane = new JPanel(new BorderLayout());
         _gamepane = new GamePanel(this);
-        _infopanel = new InfoPanel(_gamepane.getGame());
+        _infopanel = new InfoPanel();
 
         _containerpane.add(_infopanel, BorderLayout.PAGE_START);
         _containerpane.add(_gamepane, BorderLayout.PAGE_END);
 
-        Game _game = _gamepane.getGame();
+        BombermanGame _game = _gamepane.getGame();
 
         add(_containerpane);
 

@@ -1,6 +1,6 @@
 package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,14 +13,14 @@ public class InfoPanel extends JPanel {
     private JLabel timeLabel;
     private JLabel pointsLabel;
 
-    public InfoPanel(Game game) {
+    public InfoPanel() {
         setLayout(new GridLayout());
 
-        timeLabel = new JLabel("Time: " + game.getBoard().getTime());
+        timeLabel = new JLabel("Time: " + BombermanGame.getBoard().getTime());
         timeLabel.setForeground(Color.white);
         timeLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        pointsLabel = new JLabel("Points: " + game.getBoard().getPoints());
+        pointsLabel = new JLabel("Points: " + BombermanGame.getBoard().getPoints());
         pointsLabel.setForeground(Color.white);
         pointsLabel.setHorizontalAlignment(JLabel.CENTER);
 

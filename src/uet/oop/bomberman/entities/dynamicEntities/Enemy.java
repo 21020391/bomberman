@@ -1,9 +1,8 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Message;
 import uet.oop.bomberman.entities.Bomb.Flame;
 import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AI;
 import uet.oop.bomberman.graphics.Screen;
@@ -11,7 +10,6 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Coordinates;
 import uet.oop.bomberman.Sound.Audio;
 
-import java.awt.*;
 import java.io.File;
 
 public abstract class Enemy extends Character {
@@ -37,7 +35,7 @@ public abstract class Enemy extends Character {
         _points = points;
         _speed = speed;
 
-        MAX_STEPS = Game.TILES_SIZE / _speed;
+        MAX_STEPS = BombermanGame.TILES_SIZE / _speed;
         rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
         _steps = MAX_STEPS;
 
@@ -155,9 +153,6 @@ public abstract class Enemy extends Character {
         _alive = false;
 
         _board.addPoints(_points);
-
-        Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
-        _board.addMessage(msg);
     }
 
 

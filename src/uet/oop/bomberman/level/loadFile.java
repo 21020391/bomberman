@@ -1,7 +1,7 @@
 package uet.oop.bomberman.level;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Items.BombItem;
 import uet.oop.bomberman.entities.Items.FlameItem;
 import uet.oop.bomberman.entities.Items.SpeedItem;
@@ -13,7 +13,6 @@ import uet.oop.bomberman.entities.staticEntities.Portal;
 import uet.oop.bomberman.entities.staticEntities.Wall;
 import uet.oop.bomberman.entities.staticEntities.Brick;
 import uet.oop.bomberman.graphics.Coordinates;
-import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.BufferedReader;
@@ -84,30 +83,29 @@ public class loadFile extends LevelLoader {
 
             //them Bomber
             case 'p':
-                _board.addCharacter(new Bomber(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
-                Screen.setOffset(0, 0);
+                _board.addCharacter(new Bomber(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass));
                 break;
 
             //them enermy
             case '1':
-                _board.addCharacter( new Ballom(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                _board.addCharacter( new Ballom(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
                 break;
             case '2':
-                _board.addCharacter( new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                _board.addCharacter( new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
                 break;
             case '3':
-                _board.addCharacter( new Doll(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                _board.addCharacter( new Doll(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
                 break;
             case '4':
-                _board.addCharacter( new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                _board.addCharacter( new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
                 break;
             case '5':
-                _board.addCharacter( new Kondoria(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                _board.addCharacter( new Kondoria(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
                 break;
 

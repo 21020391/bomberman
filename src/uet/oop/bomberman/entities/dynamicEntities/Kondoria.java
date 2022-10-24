@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.dynamicEntities;
 
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -10,7 +10,7 @@ public class Kondoria extends Enemy {
 
 
     public Kondoria(int x, int y, Board board) {
-        super(x, y, board, Sprite.kondoria_dead, Game.getBomberSpeed() / 3, 1000);
+        super(x, y, board, Sprite.kondoria_dead, BombermanGame.getBomberSpeed() / 3, 1000);
 
         _sprite = Sprite.kondoria_right1;
 

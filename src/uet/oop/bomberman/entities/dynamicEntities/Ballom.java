@@ -1,13 +1,13 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AILow;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Ballom extends Enemy {
     public Ballom(int x, int y, Board board) {
-        super(x, y, board, Sprite.balloom_dead, Game.getBomberSpeed() / 2, 100);
+        super(x, y, board, Sprite.balloom_dead, BombermanGame.getBomberSpeed() / 2, 100);
 
         _sprite = Sprite.balloom_left1;
 

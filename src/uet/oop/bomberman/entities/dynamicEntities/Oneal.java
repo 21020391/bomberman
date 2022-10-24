@@ -2,14 +2,14 @@ package uet.oop.bomberman.entities.dynamicEntities;
 
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.Game;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Enemy {
 
     public Oneal(int x, int y, Board board) {
-        super(x, y, board, Sprite.oneal_dead, Game.getBomberSpeed()/2, 200);
+        super(x, y, board, Sprite.oneal_dead, BombermanGame.getBomberSpeed()/2, 200);
 
         _sprite = Sprite.oneal_left1;
 
