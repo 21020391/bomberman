@@ -8,7 +8,7 @@ import uet.oop.bomberman.Board;
 public abstract class LevelLoader {
 
     protected int _width;
-    protected int _height; // default values just for testing
+    protected int _height;
     protected int _level;
     protected Board _board;
 

@@ -1,13 +1,13 @@
 package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
-import uet.oop.bomberman.entities.AnimatedEntity;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Screen;
 
 /**
  * Bao gồm Bomber và Enemy
  */
-public abstract class Character extends AnimatedEntity {
+public abstract class Character extends Entity {
 
     protected Board _board;
     protected int _direction = -1;

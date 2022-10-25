@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities.Bomb;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.entities.dynamicEntities.Character;
@@ -13,7 +12,7 @@ import uet.oop.bomberman.Sound.Audio;
 
 import java.io.File;
 
-public class Bomb extends AnimatedEntity {
+public class Bomb extends Entity {
 
     protected double _timeToExplode = 120; //2 seconds
     public int _timeAfter = 20;

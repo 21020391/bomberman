@@ -62,8 +62,6 @@ public class loadFile extends LevelLoader {
     public void createEntities() {
         // TODO: tạo các Entity của màn chơi
         // TODO: sau khi tạo xong, gọi _board.addEntity() để thêm Entity vào game
-        // TODO: phần code mẫu ở dưới để hướng dẫn cách thêm các loại Entity vào game
-        // TODO: hãy xóa nó khi hoàn thành chức năng load màn chơi từ tệp cấu hình
 
         for (int i = 0; i < getHeight(); i++) {
             for (int j = 0; j < getWidth(); j++) {

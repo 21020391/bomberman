@@ -8,8 +8,6 @@ import uet.oop.bomberman.graphics.Sprite;
  * Đối tượng cố định có thể bị phá hủy
  */
 public class DestroyableTile extends Tile {
-
-    private int _animate = 0;
     protected boolean _destroyed = false;
     protected int _timeToDisapear = 20;
     protected Sprite _belowSprite = Sprite.grass;
@@ -21,8 +19,7 @@ public class DestroyableTile extends Tile {
     @Override
     public void update() {
         if(_destroyed) {
-            int MAX_ANIMATE = 7500;
-            if(_animate < MAX_ANIMATE) _animate++; else _animate = 0;
+            animate();
             if(_timeToDisapear > 0)
                 _timeToDisapear--;
             else

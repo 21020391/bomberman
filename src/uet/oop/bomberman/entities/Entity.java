@@ -14,6 +14,15 @@ public abstract class Entity implements IRender {
     protected boolean _removed = false;
     protected Sprite _sprite;
 
+    //Entity có hiệu ứng hoạt hình
+    protected int _animate = 0;
+    protected final int MAX_ANIMATE = 7500;
+
+    protected void animate() {
+        if(_animate < MAX_ANIMATE) _animate++;
+        else _animate = 0;
+    }
+
     /**
      * Phương thức này được gọi liên tục trong vòng lặp game,
      * mục đích để xử lý sự kiện và cập nhật trạng thái Entity

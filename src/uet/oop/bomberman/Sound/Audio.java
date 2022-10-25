@@ -42,13 +42,4 @@ public class Audio {
     public void stop() {
         if (clip.isRunning()) clip.stop();
     }
-
-    public void close() {
-        clip.close();
-    }
-
-//    public static void main(String[] args) {
-//        Audio audio = new Audio(new File("Asset/placeBombSound.war"));
-//        audio.play();
-//    }
 }
