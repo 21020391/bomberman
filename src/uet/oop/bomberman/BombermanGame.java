@@ -59,6 +59,10 @@ public class BombermanGame extends Canvas {
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
+    /**
+     * khoi tao phuong thuc co tham so kieu Frame
+     * BombermanGame se goi den cac doi tuong Frame, Screen, KeyBoard, Board, Audio
+     */
     public BombermanGame(Frame frame) {
         _frame = frame;
         _frame.setTitle(TITLE);
@@ -75,7 +79,7 @@ public class BombermanGame extends Canvas {
     private void renderGame() {
         BufferStrategy bs = getBufferStrategy();
         if(bs == null) {
-            createBufferStrategy(3);
+            createBufferStrategy(3); // tao bo dem 3
             return;
         }
 
@@ -83,9 +87,7 @@ public class BombermanGame extends Canvas {
 
         _board.render(screen);
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = screen._pixels[i];
-        }
+        System.arraycopy(screen._pixels, 0, pixels, 0, pixels.length);
 
         Graphics g = bs.getDrawGraphics();
 
@@ -134,8 +136,9 @@ public class BombermanGame extends Canvas {
 
 
         while(_running) {
+            //handle
             long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
+            delta += (now - lastTime) / ns; //frame fom lastTime to now ~60 frame per second
             lastTime = now;
             while(delta >= 1) {
                 update();
