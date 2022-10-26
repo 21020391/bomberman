@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities.staticEntities;
 
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.act.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Coordinates;
 

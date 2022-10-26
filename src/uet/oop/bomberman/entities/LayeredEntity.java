@@ -1,7 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import uet.oop.bomberman.entities.staticEntities.DestroyableTile;
-import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.act.Screen;
 
 import java.util.LinkedList;
 
@@ -49,10 +49,6 @@ public class LayeredEntity extends Entity {
         if(top.isRemoved())  {
             _entities.removeLast();
         }
-    }
-
-    public void addBeforeTop(Entity e) {
-        _entities.add(_entities.size() - 1, e);
     }
 
     @Override

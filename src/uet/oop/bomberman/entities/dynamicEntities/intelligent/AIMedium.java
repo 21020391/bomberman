@@ -1,9 +1,10 @@
-package uet.oop.bomberman.entities.dynamicEntities.Intelligent;
+package uet.oop.bomberman.entities.dynamicEntities.intelligent;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.dynamicEntities.*;
+import uet.oop.bomberman.entities.dynamicEntities.enemy.Enemy;
 
 public class AIMedium extends AI {
     Bomber _bomber;

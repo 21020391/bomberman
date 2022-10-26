@@ -1,6 +1,7 @@
-package uet.oop.bomberman.graphics;
+package uet.oop.bomberman.act.frame;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.act.frame.Frame;
 
 import javax.swing.*;
 import java.awt.*;

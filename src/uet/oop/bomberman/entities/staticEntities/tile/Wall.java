@@ -1,11 +1,12 @@
-package uet.oop.bomberman.entities.Items;
+package uet.oop.bomberman.entities.staticEntities.tile;
+
 
 import uet.oop.bomberman.entities.staticEntities.Tile;
 import uet.oop.bomberman.graphics.Sprite;
 
-public abstract class Items extends Tile {
+public class Wall extends Tile {
 
-    public Items(int x, int y, Sprite sprite) {
+    public Wall(int x, int y, Sprite sprite) {
         super(x, y, sprite);
     }
 

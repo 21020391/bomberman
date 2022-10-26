@@ -1,9 +1,9 @@
-package uet.oop.bomberman.entities.dynamicEntities;
+package uet.oop.bomberman.entities.dynamicEntities.enemy;
 
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AIMedium;
+import uet.oop.bomberman.entities.dynamicEntities.intelligent.AIMedium;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Kondoria extends Enemy {

@@ -1,14 +1,16 @@
-package uet.oop.bomberman.entities.dynamicEntities;
+package uet.oop.bomberman.entities.dynamicEntities.enemy;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Flame;
-import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AI;
-import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.entities.dynamicEntities.Bomber;
+import uet.oop.bomberman.entities.dynamicEntities.Character;
+import uet.oop.bomberman.entities.dynamicEntities.intelligent.AI;
+import uet.oop.bomberman.act.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Coordinates;
-import uet.oop.bomberman.Sound.Audio;
+import uet.oop.bomberman.sound.Audio;
 
 import java.io.File;
 

@@ -6,7 +6,7 @@ import uet.oop.bomberman.entities.Bomb.FlameSegment;
 import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.entities.dynamicEntities.Character;
 import uet.oop.bomberman.graphics.IRender;
-import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.act.Screen;
 import uet.oop.bomberman.act.KeyBoard;
 import uet.oop.bomberman.level.loadFile;
 import uet.oop.bomberman.level.LevelLoader;
@@ -103,6 +103,11 @@ public class Board implements IRender {
         _screenToShow = 1;
         _game.resetScreenDelay();
         _game.pause();
+        _screen.clear();
+    }
+
+    public void afterEndGame() {
+        loadLevel(1);
     }
 
     public boolean detectNoEnemies() {
@@ -116,6 +121,7 @@ public class Board implements IRender {
     }
 
     public void drawScreen(Graphics g) {
+
         switch (_screenToShow) {
             case 1:
                 _screen.drawEndGame(g, _points);

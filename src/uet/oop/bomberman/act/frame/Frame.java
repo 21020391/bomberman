@@ -1,4 +1,4 @@
-package uet.oop.bomberman.graphics;
+package uet.oop.bomberman.act.frame;
 
 import uet.oop.bomberman.BombermanGame;
 
@@ -41,6 +41,10 @@ public class Frame extends JFrame {
 
     public void setPoints(int points) {
         _infopanel.setPoints(points);
+    }
+
+    public void setRate (int updates, int frames) {
+        _infopanel.setRate(updates, frames);
     }
 
 }

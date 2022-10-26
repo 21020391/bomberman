@@ -5,10 +5,10 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.entities.dynamicEntities.Character;
-import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.act.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Coordinates;
-import uet.oop.bomberman.Sound.Audio;
+import uet.oop.bomberman.sound.Audio;
 
 import java.io.File;
 
@@ -59,7 +59,7 @@ public class Bomb extends Entity {
         } else
             _sprite = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, _animate, 60);
 
-        int xt = (int)_x << 4;
+        int xt = (int)_x << 4; // dich x sang trai
         int yt = (int)_y << 4;
 
         screen.renderEntity(xt, yt , this);
@@ -89,7 +89,6 @@ public class Bomb extends Entity {
         Character a = _board.getCharacterAtExcluding((int)_x, (int)_y, null);
         if(a != null)  {
             a.kill();
-            //explosionBombSound.play();
         }
 
         _flames = new Flame[4];

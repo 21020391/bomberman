@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.dynamicEntities.Intelligent;
+package uet.oop.bomberman.entities.dynamicEntities.intelligent;
 
 import java.util.Random;
 

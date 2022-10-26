@@ -5,11 +5,12 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.Flame;
-import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.entities.dynamicEntities.enemy.Enemy;
+import uet.oop.bomberman.act.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.act.KeyBoard;
 import uet.oop.bomberman.graphics.Coordinates;
-import uet.oop.bomberman.Sound.Audio;
+import uet.oop.bomberman.sound.Audio;
 
 import java.io.File;
 import java.util.Iterator;
@@ -121,6 +122,7 @@ public class Bomber extends Character {
         if (_timeAfter > 0) --_timeAfter;
         else {
             _board.endGame();
+
         }
     }
 

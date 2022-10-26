@@ -1,8 +1,8 @@
-package uet.oop.bomberman.entities.dynamicEntities;
+package uet.oop.bomberman.entities.dynamicEntities.enemy;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.dynamicEntities.Intelligent.AILow;
+import uet.oop.bomberman.entities.dynamicEntities.intelligent.AILow;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Doll extends Enemy {

@@ -1,4 +1,4 @@
-package uet.oop.bomberman.Sound;
+package uet.oop.bomberman.sound;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;

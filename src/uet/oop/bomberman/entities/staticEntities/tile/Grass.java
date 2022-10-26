@@ -1,6 +1,7 @@
-package uet.oop.bomberman.entities.staticEntities;
+package uet.oop.bomberman.entities.staticEntities.tile;
 
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.staticEntities.Tile;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Grass extends Tile {

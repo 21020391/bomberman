@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities.dynamicEntities.Intelligent;
+package uet.oop.bomberman.entities.dynamicEntities.intelligent;
 
 public class AILow extends AI {
 

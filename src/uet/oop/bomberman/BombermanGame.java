@@ -1,9 +1,9 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.graphics.Screen;
-import uet.oop.bomberman.graphics.Frame;
+import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.act.frame.Frame;
 import uet.oop.bomberman.act.KeyBoard;
-import uet.oop.bomberman.Sound.Audio;
+import uet.oop.bomberman.sound.Audio;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,7 +23,9 @@ public class BombermanGame extends Canvas {
 
     public static int SCALE = 2;
 
-    public static final String TITLE = "BombermanGame";
+    public static final String TITLE = "Welcome to BombermanGame";
+    public static int frames = 0;
+    public static int updates = 0;
 
     //Bomb Rate: số lượng bom có thể đặt liên tiếp tại thời điểm hiện tại
     private static final int BOMBRATE = 1;
@@ -65,6 +67,12 @@ public class BombermanGame extends Canvas {
      */
     public BombermanGame(Frame frame) {
         _frame = frame;
+
+        // create game icon
+        Image icon = Toolkit.getDefaultToolkit().getImage("res/font/icon.png");
+        _frame.setIconImage(icon);
+
+        //set title
         _frame.setTitle(TITLE);
 
         screen = new Screen(WIDTH, HEIGHT);
@@ -126,16 +134,23 @@ public class BombermanGame extends Canvas {
         long timer = System.currentTimeMillis();
         final double ns = 1000000000.0 / 60.0; //nanosecond, 60 frames per second
         double delta = 0;
-        int frames = 0;
-        int updates = 0;
         requestFocus();
 
         System.out.println("START !");
         backgoundSound.play();
 
-
-
         while(_running) {
+            //khi load level
+            if(_paused) {
+                if(_screenDelay <= 0) {
+                    _board.setShow(-1);
+                    _paused = false;
+                }
+                renderScreen();
+            } else {
+                renderGame();
+            }
+
             //handle
             long now = System.nanoTime();
             delta += (now - lastTime) / ns; //frame fom lastTime to now ~60 frame per second
@@ -146,29 +161,23 @@ public class BombermanGame extends Canvas {
                 delta--;
             }
 
-            if(_paused) {
-                if(_screenDelay <= 0) {
-                    _board.setShow(-1);
-                    _paused = false;
-                }
-
-                renderScreen();
-            } else {
-                renderGame();
-            }
-
-
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 _frame.setTime(_board.subtractTime());
                 _frame.setPoints(_board.getPoints());
+                _frame.setRate(updates, frames);
                 timer += 1000;
-                _frame.setTitle(TITLE + " | " + updates + " rate, " + frames + " fps");
+                _frame.setTitle(TITLE);
                 updates = 0;
                 frames = 0;
 
                 if(_board.getShow() == 2)
                     --_screenDelay;
+
+                //khi end game
+                if(_board.getShow() == 1) {
+                    _board.afterEndGame();
+                }
             }
         }
     }

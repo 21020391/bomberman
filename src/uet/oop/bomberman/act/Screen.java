@@ -1,7 +1,10 @@
-package uet.oop.bomberman.graphics;
+package uet.oop.bomberman.act;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
+
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.util.Arrays;
 
 /**
@@ -58,6 +61,7 @@ public class Screen {
             }
         }
     }
+
     public void drawEndGame(Graphics g, int points) {
         g.setColor(Color.black);
         g.fillRect(0, 0, getRealWidth(), getRealHeight());
@@ -85,6 +89,9 @@ public class Screen {
     }
 
     public void drawPaused(Graphics g) {
+        g.setColor(Color.black);
+        g.fillRect(0, 0, getRealWidth(), getRealHeight());
+
         Font font = new Font("Arial", Font.PLAIN, 20 * BombermanGame.SCALE);
         g.setFont(font);
         g.setColor(Color.white);

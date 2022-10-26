@@ -1,10 +1,10 @@
-package uet.oop.bomberman.entities.Items;
+package uet.oop.bomberman.entities.items;
 
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.Sound.Audio;
+import uet.oop.bomberman.sound.Audio;
 
 import java.io.File;
 
