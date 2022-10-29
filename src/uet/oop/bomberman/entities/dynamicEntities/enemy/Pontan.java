@@ -8,7 +8,7 @@ public class Pontan extends Enemy {
 
 
     public Pontan(int x, int y, Board board) {
-        super(x, y, board, Sprite.pontan_dead, 2, 500);
+        super(x, y, board, Sprite.pontan_dead, 2, 1500);
 
         _sprite = Sprite.pontan_right1;
 

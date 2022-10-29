@@ -143,6 +143,7 @@ public class BombermanGame extends Canvas {
         backgoundSound.play();
 
         while(_running) {
+
             //khi load level
             if(_paused) {
                 if(_screenDelay <= 0) {
@@ -162,6 +163,7 @@ public class BombermanGame extends Canvas {
                 update();
                 updates++;
                 delta--;
+
             }
 
             frames++;
@@ -184,16 +186,12 @@ public class BombermanGame extends Canvas {
                     --_screenDelay;
                     _board.afterEndGame();
                 }
+
             }
         }
-    }
-
-    //test
-    public void creatMenu(Graphics g) {
-        Image img = Toolkit.getDefaultToolkit().getImage("res/font/hi.png");
-        g.drawImage(img, 0, 0, BombermanGame.WIDTH * SCALE, BombermanGame.HEIGHT * SCALE, this);
 
     }
+
     public void drawScreen(Graphics g) {
 
         switch (_screenToShow) {
