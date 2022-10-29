@@ -144,6 +144,7 @@ public class BombermanGame extends Canvas {
 
         while(_running) {
 
+
             //khi load level
             if(_paused) {
                 if(_screenDelay <= 0) {
