@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.dynamicEntities;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.level.Screen;
 
 /**
  * Bao gồm Bomber và Enemy

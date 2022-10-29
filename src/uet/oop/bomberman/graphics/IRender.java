@@ -1,6 +1,6 @@
 package uet.oop.bomberman.graphics;
 
-import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.level.Screen;
 
 public interface IRender {
 

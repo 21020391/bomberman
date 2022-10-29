@@ -1,8 +1,9 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.act.frame.MenuStage;
+import uet.oop.bomberman.level.Screen;
 import uet.oop.bomberman.act.frame.Frame;
-import uet.oop.bomberman.act.KeyBoard;
+import uet.oop.bomberman.act.event.KeyBoard;
 import uet.oop.bomberman.sound.Audio;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public class BombermanGame extends Canvas {
 
     public static int SCALE = 2;
 
-    public static final String TITLE = "Welcome to BombermanGame";
+    public static final String TITLE = " Welcome to BombermanGame";
     public static int frames = 0;
     public static int updates = 0;
 
@@ -60,6 +61,8 @@ public class BombermanGame extends Canvas {
 
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
+    private static int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
+    protected MenuStage menu = new MenuStage();
 
     /**
      * khoi tao phuong thuc co tham so kieu Frame
@@ -75,7 +78,7 @@ public class BombermanGame extends Canvas {
         //set title
         _frame.setTitle(TITLE);
 
-        screen = new Screen(WIDTH, HEIGHT);
+        screen = new Screen();
         _input = new KeyBoard();
 
         _board = new Board(this, _input, screen);
@@ -116,7 +119,7 @@ public class BombermanGame extends Canvas {
 
         Graphics g = bs.getDrawGraphics();
 
-        _board.drawScreen(g);
+        drawScreen(g);
 
         g.dispose();
         bs.show();
@@ -143,7 +146,7 @@ public class BombermanGame extends Canvas {
             //khi load level
             if(_paused) {
                 if(_screenDelay <= 0) {
-                    _board.setShow(-1);
+                    _screenToShow = -1;
                     _paused = false;
                 }
                 renderScreen();
@@ -165,23 +168,46 @@ public class BombermanGame extends Canvas {
             if(System.currentTimeMillis() - timer > 1000) {
                 _frame.setTime(_board.subtractTime());
                 _frame.setPoints(_board.getPoints());
+                _frame.setMaxPointS(_board.get_maxPoint());
                 _frame.setRate(updates, frames);
+
                 timer += 1000;
                 _frame.setTitle(TITLE);
                 updates = 0;
                 frames = 0;
 
-                if(_board.getShow() == 2)
+                if(_screenToShow == 2)
                     --_screenDelay;
 
                 //khi end game
-                if(_board.getShow() == 1) {
+                if(_screenToShow == 1) {
+                    --_screenDelay;
                     _board.afterEndGame();
                 }
             }
         }
     }
 
+    //test
+    public void creatMenu(Graphics g) {
+        Image img = Toolkit.getDefaultToolkit().getImage("res/font/hi.png");
+        g.drawImage(img, 0, 0, BombermanGame.WIDTH * SCALE, BombermanGame.HEIGHT * SCALE, this);
+
+    }
+    public void drawScreen(Graphics g) {
+
+        switch (_screenToShow) {
+            case 1:
+                menu.drawEndGame(g, _board.getPoints());
+                break;
+            case 2:
+                menu.drawChangeLevel(g, _board.get_levelLoader().getLevel());
+                break;
+            case 3:
+                menu.drawPaused(g);
+                break;
+        }
+    }
     public static double getBomberSpeed() {
         return bomberSpeed;
     }
@@ -210,6 +236,18 @@ public class BombermanGame extends Canvas {
         _screenDelay = SCREENDELAY;
     }
 
+    public void resetBomberSpeed() {
+        bomberSpeed = BOMBERSPEED;
+    }
+
+    public void resetBombRate() {
+        bombRate = BOMBRATE;
+    }
+
+    public void resetBombRadius() {
+        bombRadius = BOMBRADIUS;
+    }
+
     //TODO: Them static
     public static Board getBoard() {
         return _board;
@@ -223,8 +261,14 @@ public class BombermanGame extends Canvas {
         _paused = true;
     }
 
+    public static void set_screenToShow(int screenToShow) {
+        _screenToShow = screenToShow;
+    }
+
     public static void main(String[] args) {
         new Frame();
+        //new Menu();
     }
+
 
 }

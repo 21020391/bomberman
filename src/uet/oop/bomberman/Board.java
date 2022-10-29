@@ -6,12 +6,11 @@ import uet.oop.bomberman.entities.Bomb.FlameSegment;
 import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.entities.dynamicEntities.Character;
 import uet.oop.bomberman.graphics.IRender;
-import uet.oop.bomberman.act.Screen;
-import uet.oop.bomberman.act.KeyBoard;
+import uet.oop.bomberman.level.Screen;
+import uet.oop.bomberman.act.event.KeyBoard;
 import uet.oop.bomberman.level.loadFile;
 import uet.oop.bomberman.level.LevelLoader;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,15 +23,14 @@ public class Board implements IRender {
     protected BombermanGame _game;
     protected KeyBoard _input;
     protected Screen _screen;
-
-
     public Entity[] _entities;
     public List<Character> _characters = new ArrayList<>();
     protected List<Bomb> _bombs = new ArrayList<>();
-    private int _screenToShow = -1; //1:endgame, 2:changelevel, 3:paused
 
     private int _time = BombermanGame.TIME;
     private int _points = BombermanGame.POINTS;
+    private ArrayList<Integer> _maxPoint = new ArrayList<>(5); // luu diem so ma nguoi choi dat duoc sau moi lan bomber chet
+    public int maxPoint = _points;
 
     public Board(BombermanGame game, KeyBoard input, Screen screen) {
         _game = game;
@@ -46,10 +44,23 @@ public class Board implements IRender {
     public void update() {
         if( _game.isPaused() ) return;
 
-        updateEntities();
-        updateCharacters();
-        updateBombs();
-        detectEndGame();
+        //updateEntities();
+        for (Entity entity : _entities) {
+            entity.update();
+        }
+
+        //updateCharacters();
+        Iterator<Character> itr = _characters.iterator();
+
+        while(itr.hasNext() && !_game.isPaused())
+            itr.next().update();
+
+        //updateBombs()
+        for (Bomb bomb : _bombs) bomb.update();
+
+        //detectEndGame()
+        if(_time <= 0)
+            endGame();
 
         for (int i = 0; i < _characters.size(); i++) {
             Character a = _characters.get(i);
@@ -61,14 +72,17 @@ public class Board implements IRender {
     public void render(Screen screen) {
         if( _game.isPaused() ) return;
 
-        for (int y = 0; y < screen.getHeight() / BombermanGame.TILES_SIZE; y++) {
-            for (int x = 0; x < screen.getWidth() / BombermanGame.TILES_SIZE; x++) {
+        for (int y = 0; y < BombermanGame.HEIGHT / BombermanGame.TILES_SIZE; y++) {
+            for (int x = 0; x < BombermanGame.WIDTH / BombermanGame.TILES_SIZE; x++) {
                 _entities[x + y * _levelLoader.getWidth()].render(screen);
             }
         }
 
-        renderBombs(screen);
-        renderCharacter(screen);
+        //renderBombs(screen)
+        for (Bomb bomb : _bombs) bomb.render(screen);
+
+        //renderCharacter(screen)
+        for (Character character : _characters) character.render(screen);
 
     }
 
@@ -78,8 +92,11 @@ public class Board implements IRender {
 
     public void loadLevel(int level) {
         _time = BombermanGame.TIME;
-        _screenToShow = 2;
+        BombermanGame.set_screenToShow(2);
         _game.resetScreenDelay();
+        _game.resetBomberSpeed();
+        _game.resetBombRadius();
+        _game.resetBombRate();
         _game.pause();
         _characters.clear();
         _bombs.clear();
@@ -94,19 +111,19 @@ public class Board implements IRender {
         }
     }
 
-    protected void detectEndGame() {
-        if(_time <= 0)
-            endGame();
-    }
-
     public void endGame() {
-        _screenToShow = 1;
+        BombermanGame.set_screenToShow(1);
         _game.resetScreenDelay();
+        _game.resetBombRate();
+        _game.resetBombRadius();
+        _game.resetBomberSpeed();
         _game.pause();
         _screen.clear();
+        _maxPoint.add(_points);
     }
 
     public void afterEndGame() {
+        BombermanGame.set_screenToShow(3);
         loadLevel(1);
     }
 
@@ -118,21 +135,6 @@ public class Board implements IRender {
         }
 
         return total == 0;
-    }
-
-    public void drawScreen(Graphics g) {
-
-        switch (_screenToShow) {
-            case 1:
-                _screen.drawEndGame(g, _points);
-                break;
-            case 2:
-                _screen.drawChangeLevel(g, _levelLoader.getLevel());
-                break;
-            case 3:
-                _screen.drawPaused(g);
-                break;
-        }
     }
 
     public Entity getEntity(double x, double y, Character m) {
@@ -245,41 +247,6 @@ public class Board implements IRender {
         _characters.add(e);
     }
 
-    public void addBomb(Bomb e) {
-        _bombs.add(e);
-    }
-
-    protected void renderCharacter(Screen screen) {
-
-        for (Character character : _characters) character.render(screen);
-    }
-
-    protected void renderBombs(Screen screen) {
-
-        for (Bomb bomb : _bombs) bomb.render(screen);
-    }
-
-    protected void updateEntities() {
-        if( _game.isPaused() ) return;
-        for (Entity entity : _entities) {
-            entity.update();
-        }
-    }
-
-    protected void updateCharacters() {
-        if( _game.isPaused() ) return;
-        Iterator<Character> itr = _characters.iterator();
-
-        while(itr.hasNext() && !_game.isPaused())
-            itr.next().update();
-    }
-
-    protected void updateBombs() {
-        if( _game.isPaused() ) return;
-
-        for (Bomb bomb : _bombs) bomb.update();
-    }
-
     public int subtractTime() {
         if(_game.isPaused())
             return this._time;
@@ -295,14 +262,6 @@ public class Board implements IRender {
         return _game;
     }
 
-    public int getShow() {
-        return _screenToShow;
-    }
-
-    public void setShow(int i) {
-        _screenToShow = i;
-    }
-
     public int getTime() {
         return _time;
     }
@@ -313,5 +272,22 @@ public class Board implements IRender {
 
     public void addPoints(int points) {
         this._points += points;
+    }
+
+    public int get_maxPoint() {
+        for (Integer integer : _maxPoint) {
+            if (integer > maxPoint) {
+                maxPoint = integer;
+            }
+        }
+        return maxPoint;
+    }
+
+    public void resetPoint() {
+        _points = BombermanGame.POINTS;
+    }
+
+    public LevelLoader get_levelLoader() {
+        return _levelLoader;
     }
 }

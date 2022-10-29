@@ -1,4 +1,4 @@
-package uet.oop.bomberman.act.frame;
+package uet.oop.bomberman.act.frame.panel;
 
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.act.frame.Frame;

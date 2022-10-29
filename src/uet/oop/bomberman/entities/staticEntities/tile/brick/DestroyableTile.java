@@ -1,7 +1,8 @@
-package uet.oop.bomberman.entities.staticEntities;
+package uet.oop.bomberman.entities.staticEntities.tile.brick;
 
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Flame;
+import uet.oop.bomberman.entities.staticEntities.Tile;
 import uet.oop.bomberman.graphics.Sprite;
 
 /**

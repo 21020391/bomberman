@@ -11,7 +11,7 @@ import uet.oop.bomberman.entities.dynamicEntities.Bomber;
 import uet.oop.bomberman.entities.staticEntities.tile.Grass;
 import uet.oop.bomberman.entities.staticEntities.tile.Portal;
 import uet.oop.bomberman.entities.staticEntities.tile.Wall;
-import uet.oop.bomberman.entities.staticEntities.Brick;
+import uet.oop.bomberman.entities.staticEntities.tile.brick.Brick;
 import uet.oop.bomberman.graphics.Coordinates;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -27,7 +27,7 @@ public class loadFile extends LevelLoader {
      * Ma trận chứa thông tin bản đồ, mỗi phần tử lưu giá trị kí tự đọc được
      * từ ma trận bản đồ trong tệp cấu hình
      */
-    private static String [][] _map = new String[50][50];
+    private static final String [][] _map = new String[50][50];
 
     public loadFile(Board board, int level) {
         super(board, level);
@@ -54,7 +54,8 @@ public class loadFile extends LevelLoader {
                 }
             }
             in.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -71,7 +72,7 @@ public class loadFile extends LevelLoader {
     }
 
     public void addLevelEntity(char c, int x, int y){
-        int pos = x + y * getWidth();
+        int pos = x + y * _width;
 
         switch(c) {
             //them Wall
@@ -106,7 +107,11 @@ public class loadFile extends LevelLoader {
                 _board.addCharacter( new Kondoria(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
                 break;
-
+            case '6': {
+                _board.addCharacter(new Pontan(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + BombermanGame.TILES_SIZE, _board));
+                _board.addEntity(pos, new Grass(x, y, Sprite.grass) );
+                break;
+            }
             //them brick
             case '*':
                 _board.addEntity(pos, new LayeredEntity(x, y, new Grass(x, y, Sprite.grass), new Brick(x, y, Sprite.brick)));
@@ -114,37 +119,21 @@ public class loadFile extends LevelLoader {
 
             //them portal
             case 'x':
-                _board.addEntity(x + y * _width,
-                        new LayeredEntity(x, y,
-                                //new Grass(x, y, Sprite.grass),
-                                new Portal(x, y, Sprite.portal),
-                                new Brick(x, y, Sprite.brick)
-                        ));
+                _board.addEntity(pos, new LayeredEntity(x, y, new Portal(x, y, Sprite.portal), new Brick(x, y, Sprite.brick)));
                 break;
+
             // thêm Item kèm Brick che phủ ở trên
             case 's':
-                _board.addEntity(x + y * _width,
-                        new LayeredEntity(x, y,
-                                new Grass(x, y, Sprite.grass),
-                                new SpeedItem(x, y, Sprite.powerup_speed),
-                                new Brick(x, y, Sprite.brick)
-                        ));
+                _board.addEntity(pos, new LayeredEntity(x, y, new Grass(x, y, Sprite.grass), new SpeedItem(x, y, Sprite.powerup_speed),
+                                new Brick(x, y, Sprite.brick)));
                 break;
             case 'b':
-                _board.addEntity(x + y * _width,
-                        new LayeredEntity(x, y,
-                                new Grass(x, y, Sprite.grass),
-                                new BombItem(x, y, Sprite.powerup_bombs),
-                                new Brick(x, y, Sprite.brick)
-                        ));
+                _board.addEntity(x + y * _width, new LayeredEntity(x, y, new Grass(x, y, Sprite.grass),
+                                new BombItem(x, y, Sprite.powerup_bombs),new Brick(x, y, Sprite.brick) ));
                 break;
             case 'f':
-                _board.addEntity(x + y * _width,
-                        new LayeredEntity(x, y,
-                                new Grass(x, y, Sprite.grass),
-                                new FlameItem(x, y, Sprite.powerup_flames),
-                                new Brick(x, y, Sprite.brick)
-                        ));
+                _board.addEntity(pos, new LayeredEntity(x, y, new Grass(x, y, Sprite.grass), new FlameItem(x, y, Sprite.powerup_flames),
+                                new Brick(x, y, Sprite.brick) ));
                 break;
             default:
                 _board.addEntity(pos, new Grass(x, y, Sprite.grass) );

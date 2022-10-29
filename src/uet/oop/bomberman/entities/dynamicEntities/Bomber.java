@@ -6,9 +6,9 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.Flame;
 import uet.oop.bomberman.entities.dynamicEntities.enemy.Enemy;
-import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.level.Screen;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.act.KeyBoard;
+import uet.oop.bomberman.act.event.KeyBoard;
 import uet.oop.bomberman.graphics.Coordinates;
 import uet.oop.bomberman.sound.Audio;
 
@@ -91,7 +91,8 @@ public class Bomber extends Character {
     protected void placeBomb(int x, int y) {
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
         Bomb b = new Bomb(x, y, _board);
-        _board.addBomb(b);
+        //_board.addBomb(b);
+        _bombs.add(b);
         placeBombSound.play();
     }
 
@@ -122,7 +123,7 @@ public class Bomber extends Character {
         if (_timeAfter > 0) --_timeAfter;
         else {
             _board.endGame();
-
+            _board.resetPoint();
         }
     }
 
@@ -231,4 +232,6 @@ public class Bomber extends Character {
                 break;
         }
     }
+
+
 }

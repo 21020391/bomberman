@@ -1,10 +1,10 @@
-package uet.oop.bomberman.entities.staticEntities;
+package uet.oop.bomberman.entities.staticEntities.tile.brick;
 
 
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Bomb.Flame;
 import uet.oop.bomberman.entities.dynamicEntities.enemy.Kondoria;
-import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.level.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Coordinates;
 
