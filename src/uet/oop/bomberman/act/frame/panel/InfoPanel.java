@@ -1,4 +1,4 @@
-package uet.oop.bomberman.act.frame;
+package uet.oop.bomberman.act.frame.panel;
 
 import uet.oop.bomberman.BombermanGame;
 
@@ -13,6 +13,7 @@ public class InfoPanel extends JPanel {
     private JLabel timeLabel;
     private JLabel pointsLabel;
     private JLabel rateLabel;
+    private JLabel maxPointsLabel;
 
     public InfoPanel() {
         setLayout(new GridLayout());
@@ -25,6 +26,10 @@ public class InfoPanel extends JPanel {
         pointsLabel.setForeground(Color.yellow);
         pointsLabel.setHorizontalAlignment(JLabel.CENTER);
 
+        maxPointsLabel = new JLabel("Max Points: " + BombermanGame.getBoard().getPoints());
+        maxPointsLabel.setForeground(Color.yellow);
+        maxPointsLabel.setHorizontalAlignment(JLabel.CENTER);
+
         rateLabel = new JLabel("Rate: " + BombermanGame.updates + " | FPS: " + BombermanGame.frames);
         rateLabel.setForeground(Color.yellow);
         rateLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -32,6 +37,7 @@ public class InfoPanel extends JPanel {
         add(timeLabel);
         add(pointsLabel);
         add(rateLabel);
+        add(maxPointsLabel);
 
         setBackground(Color.darkGray);
         setPreferredSize(new Dimension(0, 40));
@@ -47,6 +53,10 @@ public class InfoPanel extends JPanel {
 
     public void setRate (int r, int f) {
         rateLabel.setText("Rate: " + r + "   |   FPS: " + f);
+    }
+
+    public void setMaxPoints(int t) {
+        maxPointsLabel.setText("Max Score: " + t);
     }
 
 }

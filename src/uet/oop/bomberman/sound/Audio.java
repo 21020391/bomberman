@@ -28,6 +28,7 @@ public class Audio {
             clip = AudioSystem.getClip();
             clip.open(dais);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

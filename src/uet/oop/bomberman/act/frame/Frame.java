@@ -1,6 +1,8 @@
 package uet.oop.bomberman.act.frame;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.act.frame.panel.GamePanel;
+import uet.oop.bomberman.act.frame.panel.InfoPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +47,10 @@ public class Frame extends JFrame {
 
     public void setRate (int updates, int frames) {
         _infopanel.setRate(updates, frames);
+    }
+
+    public void setMaxPointS(int points) {
+        _infopanel.setMaxPoints(points);
     }
 
 }

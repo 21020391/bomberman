@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.Bomb;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.dynamicEntities.Character;
-import uet.oop.bomberman.act.Screen;
+import uet.oop.bomberman.level.Screen;
 
 public class Flame extends Entity {
 
@@ -112,4 +112,5 @@ public class Flame extends Entity {
         // TODO: xử lý va chạm với Bomber, Enemy. Chú ý đối tượng này có vị trí chính là vị trí của Bomb đã nổ
         return true;
     }
+
 }
